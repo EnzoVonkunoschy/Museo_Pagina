@@ -1,0 +1,19 @@
+ClassDiagram{
+    class Usuario{
+    
+        id_Usurio: string
+        nombre: string
+        contrasena: string
+        rol: string
+    
+    getId_Usuario():string
+    getNombre(): string
+    getContrasena():string
+    getRol():string
+
+    setNombre(string):void
+    setContrasena(string):void
+    setRol(string):void
+
+    }
+}
