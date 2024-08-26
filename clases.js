@@ -1,7 +1,7 @@
 const Helper = require('./helper.js')
 
 class Noticia{
-    constructor(titular = "", imagen= "", descripcion= ""){
+    constructor(titular, imagen, descripcion){
         this.id = Helper.getUuid()
         this.titular = titular;
         this.imagen = imagen;
