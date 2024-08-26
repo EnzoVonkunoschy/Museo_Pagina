@@ -1,37 +1,39 @@
 const Helper = require('./helper.js')
 
 class Noticia{
-    constructor(){
+    constructor(titular, imagen, descripcion){
         this.id = Helper.getUuid()
-
+        this.titular = titular;
+        this.imagen = imagen;
+        this.descripcion = descripcion;
     }
 
     getId(){
-        return this.id
+        return this.id;
     }
 
     getTitular(){
-        return("")
+        return this.titular;
     }
 
     getImagen(){
-        return("")
+        return this.imagen;
     }
 
     getDescripcion(){
-        return("")
+        return this.descripcion;
     }
 
     setTitular(tit){
-
+        this.titular = tit;
     }
 
     setImagen(img){
-
+        this.imagen = img;
     }
 
     setDescripcion(des){
-
+        this.descripcion = des;
     }
 }
 

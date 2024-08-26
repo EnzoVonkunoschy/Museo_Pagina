@@ -24,16 +24,16 @@ function testNoticia(){
     console.log("testNoticia ------------------------")
     const not = new Clases.Noticia("Titular de la noticia","images/imagen de la noticia.png","Texto de la noticia.")
     console.log(not.getTitular()=="Titular de la noticia" &&
-                not.imagen == "images/imagen de la noticia.png" &&
-                not.descripcion == "Texto de la noticia.")
+                not.getImagen() == "images/imagen de la noticia.png" &&
+                not.getDescripcion() == "Texto de la noticia.")
 
     not.setTitular("Cambio de Titular")
     not.setImagen("otra imagen.png")
     not.setDescripcion("Modificación descripción.")
 
     console.log(not.getTitular()=="Cambio de Titular" &&
-                not.imagen == "otra imagen.png" &&
-                not.descripcion == "Modificación descripción.")    
+                not.getImagen() == "otra imagen.png" &&
+                not.getDescripcion() == "Modificación descripción.")    
 
 }
 
