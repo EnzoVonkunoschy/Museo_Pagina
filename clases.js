@@ -7,23 +7,39 @@ class Mercaderia{
 }
 
 class Usuario{
-    constructor(nombre, usuario, pass, token, perfil){
+    constructor(nombre, contrasena, rol){
         this.nombre = nombre;
-        this.usuario = usuario;
-        this.pass = pass;
-        this.token = token;
-        this.perfil = perfil;
+        this.contrasena = contrasena;
+        this.rol = rol;
         this.class = "Usuario";
+    }
+    
+    setNombre(nombre){
+        this.nombre=nombre;
+    }
+    setContrasena(contrasena){
+        this.contrasena=contrasena;
+    }
+    setRol(rol){
+        this.rol=rol;
+    }
+
+    getNombre(){
+        return this.nombre;
+    }
+    getContrasena(){
+        return this.contrasena;
+    }
+    getRol(){
+        return this.rol;
     }
 
     static fromJSON(json){
         if(json.class == "Usuario"){
             let nuevoUsuario = new Usuario();
             nuevoUsuario.nombre = json.nombre;
-            nuevoUsuario.usuario = json.usuario;
-            nuevoUsuario.pass = json.pass;
-            nuevoUsuario.token = json.token;
-            nuevoUsuario.perfil = json.perfil;
+            nuevoUsuario.contrasena = json.contrasena;
+            nuevoUsuario.rol = json.rol;
             nuevoUsuario.class = json.class;
             
             return nuevoUsuario;
