@@ -13,6 +13,10 @@ function guardarUsuario(data){
     fs.writeFileSync('./db/usuarios.txt',JSON.stringify(usuarios))
 }
 
+function eliminarUsuario(nomUsu){
+
+}
+
 function getUsuarios(){    
  
     let str_usuarios = fs.readFileSync('./db/usuarios.txt','utf-8')
@@ -51,4 +55,4 @@ function obtener(){
 
 }
 
-module.exports = {guardar, obtener, guardarUsuario, getUsuarios}
+module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario}
