@@ -2,6 +2,20 @@ const Clases = require('./clases.js');
 const Helper = require('./helper.js');
 const Modelo = require('./modelo.js');
 
+function testValidar(){
+    console.log("testValidar ------------------------------")
+    const nuevoUsuario = new Clases.Usuario("Usuario Test","Contrasena Test","Rol test")
+    
+    Modelo.guardarUsuario(nuevoUsuario)
+
+    let usu = "Usuario Test"
+    let con = "Contrasena Test"
+    console.log(Modelo.validar(usu,con)) // devuelve true si coinciden usuario y contraseña
+
+   Modelo.eliminarUsuario(nuevoUsuario.nombre)
+ 
+}
+
 
 function testUsuarios(){
     console.log("testUsuarios ------------------------------")
@@ -59,3 +73,4 @@ function testNoticia(){
 testUsuario()
 testNoticia()
 testUsuarios()
+testValidar()
