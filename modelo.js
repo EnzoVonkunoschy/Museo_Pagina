@@ -1,6 +1,16 @@
 const fs = require('fs')
 const Clases = require('./clases.js')
 
+function validar(usu, con){
+    // Levanta todos los usarios de la unidad local
+
+    // filtra por usuario y contraseña
+
+    // si la cantidad de elementos filtrados es uno devuelve true
+    // sinó devuelve false
+    return null
+}
+
 function guardarUsuario(data){
 
     let str_usuarios = fs.readFileSync('./db/usuarios.txt','utf-8')
@@ -65,4 +75,4 @@ function obtener(){
 
 }
 
-module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario}
+module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar}
