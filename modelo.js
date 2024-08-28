@@ -3,12 +3,19 @@ const Clases = require('./clases.js')
 
 function validar(usu, con){
     // Levanta todos los usarios de la unidad local
-
+    let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
+    let usuarios = JSON.parse(str_usuarios);
     // filtra por usuario y contraseña
 
-    // si la cantidad de elementos filtrados es uno devuelve true
+    for (let i = 0; i < usuarios.length; i++) {
+        if (usuarios[i].nombre === usu && usuarios[i].contrasena === con) {
+        // Si hay una coincidencia, devolver true
+            return true;
+        }
+    }
     // sinó devuelve false
-    return null
+    return false;
+    //return null
 }
 
 function guardarUsuario(data){
