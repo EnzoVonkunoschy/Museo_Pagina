@@ -30,6 +30,10 @@ function guardarUsuario(data){
     fs.writeFileSync('./db/usuarios.txt',JSON.stringify(usuarios))
 }
 
+function guardarNoticia(data){
+    //similar a guardar usuario
+}
+
 function eliminarUsuario(nomUsu) {
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
     let usuarios = [];
@@ -43,6 +47,9 @@ function eliminarUsuario(nomUsu) {
     fs.writeFileSync('./db/usuarios.txt', JSON.stringify(usuarios));
 }
 
+function eliminarNoticia(id){
+    // similar a eliminar usuario, solo que el filtrado es por id, en vez de nombre
+}
 
 function getUsuarios(){    
  
@@ -56,6 +63,16 @@ function getUsuarios(){
 
     return objUsuarios;
 
+}
+
+function getNoticias(){
+    // similar a getUsuarios
+    let noticias = [new Clases.Noticia("Titular1","imagen1.png","Descripción1"),
+        new Clases.Noticia("Titular2","imagen2.png","Descripción2"),
+        new Clases.Noticia("Titular3","imagen2.png","Descripción2")
+    ]
+
+    return noticias; //Respuesta simulada para evitar el error
 }
 
 function guardar(data){
@@ -82,4 +99,4 @@ function obtener(){
 
 }
 
-module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar}
+module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia}
