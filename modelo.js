@@ -13,20 +13,6 @@ function guardarUsuario(data){
     fs.writeFileSync('./db/usuarios.txt',JSON.stringify(usuarios))
 }
 
-function eliminarUsuario(nomUsu) {
-    let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
-    let usuarios = [];
-    if (str_usuarios) {
-        usuarios = JSON.parse(str_usuarios);
-    }
-
-    // Filtrar los usuarios para eliminar el que tiene el nombre especificado
-    usuarios = usuarios.filter(usuario => usuario.nombre !== nomUsu);
-
-    fs.writeFileSync('./db/usuarios.txt', JSON.stringify(usuarios));
-}
-
-
 function getUsuarios(){    
  
     let str_usuarios = fs.readFileSync('./db/usuarios.txt','utf-8')
