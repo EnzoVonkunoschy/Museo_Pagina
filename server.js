@@ -41,12 +41,28 @@ app.get('/', (req,res)=>{
     res.send(salida);
 })
 
-app.post('/login', (req,res)=>{
+app.get('/login', (req,res)=>{
+
+    var archivo = fs.readFileSync('./views/login.hbs','utf-8',(err,data)=>{
+       if(err){
+           console.log(err);         
+       }else{
+           console.log("archivo leído");
+       }
+   });
+   var template = Handlebars.compile(archivo);
+   var salida = template(objeto);
+   res.send(salida);
+})
+
+app.post('/login2', (req,res)=>{
 
     console.log("browser --> server 'post/login'");
     console.log("server --> seguridad 'registrado(req.body)'")
 
-    let registrado = Seguridad.registrado(req.body);
+    let registrado;
+    registrado = true // Seguridad.registrado(req.body)
+    //registrado = true // Seguridad.registrado(req.body)
     
 
     if(registrado==true){
@@ -111,5 +127,5 @@ app.post('/agregar',(req, res)=>{
 
 
 app.listen(port, ()=>{
-    console.log('Escuchando en el puerto ${port}')
+    console.log(`Escuchando en el puerto ${port}`)
 });

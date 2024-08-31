@@ -2,6 +2,39 @@ const Clases = require('./clases.js');
 const Helper = require('./helper.js');
 const Modelo = require('./modelo.js');
 
+function testNoticias(){
+    console.log("testNoticias ------------------------")
+    const nuevaNoticia = new Clases.Noticia("Test Titular","imagen.jpg", "Test Descripción")
+
+    Modelo.guardarNoticia(nuevaNoticia) // Se debe implementar esta función
+    let todasLasNoticias = Modelo.getNoticias() // Se debe implementar esta función
+    console.log("Noticias:", todasLasNoticias)
+    let filNoticias = todasLasNoticias.filter(x=>x.getTitular() == "Test Titular" &&
+     x.getImagen() == "imagen.jpg" &&
+      x.getDescripcion() == "Test Descripción")
+      console.log("Noticias filtradas:", filNoticias)
+      if(filNoticias.length == 1){
+        Modelo.eliminarNoticia(filNoticias[0].id) // Se debe implementar esta función
+        console.log(true)
+      }else{
+        console.log(false)
+      }
+}
+
+function testValidar(){
+    console.log("testValidar ------------------------------")
+    const nuevoUsuario = new Clases.Usuario("Usuario Test","Contrasena Test","Rol test")
+    
+    Modelo.guardarUsuario(nuevoUsuario)
+
+    let usu = "Usuario Test"
+    let con = "Contrasena Test"
+    console.log(Modelo.validar(usu,con)) // devuelve true si coinciden usuario y contraseña
+
+   Modelo.eliminarUsuario(nuevoUsuario.nombre)
+ 
+}
+
 
 function testUsuarios(){
     console.log("testUsuarios ------------------------------")
@@ -59,3 +92,6 @@ function testNoticia(){
 testUsuario()
 testNoticia()
 testUsuarios()
+testValidar()
+
+testNoticias()

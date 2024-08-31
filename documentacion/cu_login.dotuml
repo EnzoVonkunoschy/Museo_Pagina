@@ -9,5 +9,5 @@ server      -->     seguridad 'registrado(req.body)'
 seguridad   -->     modelo 'validar(usu, con)'       
 seguridad   <-r-    modelo 'true'        
 server      <-r-    seguridad 'true'
-browser     <-r-    server 'index.hbs'  
+browser     <-r-    server 'menu.hbs'  
 }
