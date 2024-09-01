@@ -1,5 +1,19 @@
 const Helper = require('./helper.js')
 
+class Portada{
+    constructor(not){
+        this.noticia= not
+    }
+
+    getNoticia(){
+        return this.noticia
+    }
+
+    setNoticia(not){
+        this.noticia = not;
+    }
+}
+
 class Noticia{
     constructor(titular, imagen, descripcion){
         this.id = Helper.getUuid()
@@ -104,4 +118,4 @@ class Perfil {
     }
 }
 
-module.exports = {Mercaderia, Usuario, Perfil, Noticia}
+module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia}

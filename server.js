@@ -37,6 +37,7 @@ app.get('/', (req,res)=>{
         }
     });
     var template = Handlebars.compile(archivo);
+    objeto.portada = Controlador.damePortada()
     var salida = template(objeto);
     res.send(salida);
 })

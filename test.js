@@ -1,6 +1,8 @@
 const Clases = require('./clases.js');
 const Helper = require('./helper.js');
 const Modelo = require('./modelo.js');
+const Controlador = require('./controlador.js')
+
 
 function testNoticias(){
     console.log("testNoticias ------------------------")
@@ -9,8 +11,8 @@ function testNoticias(){
     Modelo.guardarNoticia(nuevaNoticia) // Se debe implementar esta función
     let todasLasNoticias = Modelo.getNoticias() // Se debe implementar esta función
     let filNoticias = todasLasNoticias.filter(x=>x.getTitular()== "Test Titular" &&
-     x.getImagen() == "imagen.jpg" &&
-      getDescripcion() == "Test Descripción")
+                                                x.getImagen() == "imagen.jpg" &&
+                                                x.getDescripcion() == "Test Descripción")
       if(filNoticias.length == 1){
         Modelo.eliminarNoticia(filNoticias[0].id) // Se debe implementar esta función
         console.log(true)
