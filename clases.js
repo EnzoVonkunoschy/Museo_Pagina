@@ -104,4 +104,4 @@ class Perfil {
     }
 }
 
-module.exports = {Mercaderia, Usuario, Perfil, Noticia}
+module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia}
