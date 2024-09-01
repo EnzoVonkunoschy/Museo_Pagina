@@ -128,4 +128,5 @@ class Perfil {
     }
 }
 
+
 module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia}
