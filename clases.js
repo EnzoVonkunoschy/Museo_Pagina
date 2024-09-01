@@ -1,15 +1,26 @@
 const Helper = require('./helper.js')
 
+class Portada{
+    constructor(not){
+        this.noticia= not
+    }
+
+    getNoticia(){
+        return this.noticia
+    }
+
+    setNoticia(not){
+        this.noticia = not;
+    }
+}
+
 class Noticia{
     constructor(titular, imagen, descripcion){
         this.id = Helper.getUuid()
         this.titular = titular;
         this.imagen = imagen;
         this.descripcion = descripcion;
-    }
-
-    getId(){
-        return this.id;
+        this.class = "Noticia";
     }
 
     getTitular(){
@@ -35,6 +46,19 @@ class Noticia{
     setDescripcion(des){
         this.descripcion = des;
     }
+
+    static fromJSON(json){
+        if(json.class == "Noticia"){
+            let nuevoNoticia = new Noticia();
+            nuevoNoticia.id = json.id;
+            nuevoNoticia.titular = json.titular;
+            nuevoNoticia.imagen = json.imagen;
+            nuevoNoticia.descripcion = json.descripcion;
+            nuevoNoticia.class = json.class
+
+            return nuevoNoticia;
+        }
+    }    
 }
 
 class Mercaderia{
@@ -103,5 +127,6 @@ class Perfil {
         }
     }
 }
+
 
 module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia}

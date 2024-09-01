@@ -6,14 +6,37 @@ ClassDiagram{
         contrasena: string
         rol: string
     
-    getId_Usuario():string
-    getNombre(): string
-    getContrasena():string
-    getRol():string
+        getId_Usuario():string
+        getNombre(): string
+        getContrasena():string
+        getRol():string
 
-    setNombre(string):void
-    setContrasena(string):void
-    setRol(string):void
+        setNombre(string):void
+        setContrasena(string):void
+        setRol(string):void
 
     }
+
+    class Noticia{
+        id:string
+        titular:string
+        imagen:string
+        descripcion:string
+        getId():string
+        getTitular():string
+        getImagen():string
+        getDescripcion():string
+        setTitular(string):void
+        setImagen(string):void
+        setDescripcion(string):void
+
+    }
+
+    class Portada{
+        noticia:Noticia
+        setNoticia(Noticia)
+        getNoticia():noticia
+    }
+
+    Portada '1'  --> '1' Noticia
 }
