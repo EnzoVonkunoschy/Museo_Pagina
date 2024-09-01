@@ -31,7 +31,14 @@ function guardarUsuario(data){
 }
 
 function guardarNoticia(data){
-    //similar a guardar usuario
+    let str_noticias = fs.readFileSync('./db/noticias.txt','utf-8')
+    let noticias = []
+    if(str_noticias){
+        noticias = JSON.parse(str_noticias)
+    }
+    
+    noticias.push(data)
+    fs.writeFileSync('./db/noticias.txt',JSON.stringify(noticias))
 }
 
 function eliminarUsuario(nomUsu) {
@@ -47,9 +54,19 @@ function eliminarUsuario(nomUsu) {
     fs.writeFileSync('./db/usuarios.txt', JSON.stringify(usuarios));
 }
 
-function eliminarNoticia(id){
-    // similar a eliminar usuario, solo que el filtrado es por id, en vez de nombre
+function eliminarNoticia(id) {
+    let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
+    let noticias = [];
+    if (str_noticias) {
+        noticias = JSON.parse(str_noticias);
+    }
+
+    // Filtrar los noticias para eliminar el que tiene el id especificado
+    noticias = noticias.filter(noticia => noticia.id !== id);
+
+    fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticias));
 }
+
 
 function getUsuarios(){    
  
@@ -66,13 +83,16 @@ function getUsuarios(){
 }
 
 function getNoticias(){
-    // similar a getUsuarios
-    let noticias = [new Clases.Noticia("Titular1","imagen1.png","Descripción1"),
-        new Clases.Noticia("Titular2","imagen2.png","Descripción2"),
-        new Clases.Noticia("Titular3","imagen2.png","Descripción2")
-    ]
+    
+    let str_noticias = fs.readFileSync('./db/noticias.txt','utf-8')
+    let noticias = []
+    if(str_noticias){ 
+        noticias = JSON.parse(str_noticias);
+    }
+    let objNoticias = [];
+    noticias.forEach(x=>objNoticias.push(Clases.Noticia.fromJSON(x)))
 
-    return noticias; //Respuesta simulada para evitar el error
+    return objNoticias;
 }
 
 function guardar(data){
