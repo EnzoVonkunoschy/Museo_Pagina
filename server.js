@@ -23,6 +23,25 @@ let _url = path.join(__dirname,'./views/');
 
 _url = "http://localhost:"+port;
 
+var estaUrl = path.join(__dirname);
+
+// Agregado para direccionar el servidor---------------
+let produccion = false
+if(estaUrl[0] == "C" && estaUrl[1] == ":"){
+    produccion = false;
+}else{
+    produccion = true;
+}
+
+if(produccion){
+    _url = "https://"+process.env.RAILWAY_PUBLIC_DOMAIN+"/";
+}else{
+    _url = "http://localhost:3000/";
+}
+console.log("produccion")
+console.log(produccion)
+//-------------------------------------------------------
+
 //var objeto = {url : _url+"/login"};
 var objeto = {url : _url};
 let destino = {url:""}
