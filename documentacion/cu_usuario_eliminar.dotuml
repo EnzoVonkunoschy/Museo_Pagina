@@ -1,0 +1,19 @@
+SequenceDiagram{
+lifeline browser
+lifeline server
+lifeline seguridad
+lifeline controlador
+lifeline modelo
+
+browser --> server "post/eliminarusuario"
+server --> seguridad "eliminarUsuario(body)"
+seguridad --> controlador "eliminarUsuario \n(usuarioEnSesion, data)"
+controlador --> modelo "eliminarUsuario(nombre)"
+controlador --> modelo "getUsuarios()"
+controlador <-r- modelo "[{Usuario}]"
+seguridad <-r- controlador "[{Usuario}]"
+server <-r- seguridad "[{Usuario}]"
+browser <-r- server "[{Usuario}]"
+
+
+}

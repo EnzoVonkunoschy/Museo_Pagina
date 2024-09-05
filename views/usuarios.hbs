@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Mi Empresa</h1>
+    <h2>Usuarios</h2>
     <nav>
         <form action="{{url}}usuarios" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Usuarios"> </form>  
         <form action="{{url}}noticias" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Noticias"> </form>  
@@ -15,10 +16,24 @@
         <form action="{{url}}login2" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Volver"> </form>  
      </nav>
     <hr>
-    <pre>{{token}}</pre>
-    <img src="{{url}}/empresa.png" alt="Imágen de Empresa">
-    <hr>
    
+    {{#each carga}}
+    <p>{{this.nombre}} {{this.rol}} <form action="{{../url}}eliminarusuario" method="POST" >
+        <input type="hidden" name="token" value="{{../token}}">
+        <input type="hidden" name="nombre" value="{{this.nombre}}">
+        <input type="submit" value="Eliminar">
+        </form> </p>
+    {{/each}}
+
+    <hr>
+    <label>Agregar Usuario:</label>
+   <form action="{{url}}agregarusuario" method="POST">
+    <p><label>Nombre:</label><input type="text" name="nombre"></p>
+    <p><label>Contraseña:</label><input type="text" name="contrasena"></p>
+    <p><label>Rol:</label><input type="text" name="rol"></p>
+    <input type="hidden" name="token" value="{{token}}">
+    <input type="submit" value="Agregar Usuario">
+   </form>
 
 </body>
 </html>

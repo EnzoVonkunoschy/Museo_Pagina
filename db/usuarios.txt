@@ -1,1 +1,1 @@
-[]
+[{"nombre":"admin","contrasena":"admin","rol":"admin","class":"Usuario"},{"nombre":"Evangelina","class":"Usuario"},{"nombre":"Pedro","contrasena":"1111","rol":"asistente","class":"Usuario"}]

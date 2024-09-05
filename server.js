@@ -43,7 +43,7 @@ console.log(produccion)
 //-------------------------------------------------------
 
 //var objeto = {url : _url+"/login"};
-var objeto = {url : _url};
+var objeto = {url : _url,token:""};
 let destino = {url:""}
 //------------- zona de ruteo ------------------
 app.get('/', (req,res)=>{
@@ -77,15 +77,9 @@ app.get('/login', (req,res)=>{
 
 app.post('/login2', (req,res)=>{
 
-    console.log("browser --> server 'post/login'");
-    console.log("server --> seguridad 'registrado(req.body)'")
-
-    let registrado;
-    registrado = true // Seguridad.registrado(req.body)
-    //registrado = true // Seguridad.registrado(req.body)
-    
-
-    if(registrado==true){
+    let registrado = Seguridad.registrado(req.body)
+ 
+    if(registrado.validado){
         console.log("server <-r- seguridad 'true'");
         var archivo = fs.readFileSync('./views/menu.hbs','utf-8',(err,data)=>{
             if(err){
@@ -95,17 +89,71 @@ app.post('/login2', (req,res)=>{
             }
         });
         var template = Handlebars.compile(archivo);
+        objeto.token = registrado.token
         var salida = template(objeto);
-        console.log("browser <-r- server 'menu.html'")
         res.send(salida);
     }else{
-        console.log("server <-r- seguridad 'false'");
-        console.log("browser <-r- server 'Error...!!!.html'")
+
         res.send("<p>Error...!!!</p>");
     }
 })
 
-app.get('/nuevo', (req,res)=>{
+app.post('/usuarios', (req,res)=>{
+
+    var archivo = fs.readFileSync('./views/usuarios.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
+    
+    let xcarga = Seguridad.listarUsuarios(req.body)
+
+    objeto.carga = xcarga
+    var salida = template(objeto);
+    res.send(salida);
+})
+
+app.post('/agregarusuario', (req, res)=>{
+
+    var archivo = fs.readFileSync('./views/usuarios.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
+
+    let xcarga = Seguridad.agregarUsuario(req.body)
+
+    objeto.carga = xcarga
+    var salida = template(objeto);
+    res.send(salida);
+    //res.send("Llegó nuevo usuario")
+})
+
+app.post('/eliminarusuario', (req, res)=>{
+   
+    var archivo = fs.readFileSync('./views/usuarios.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
+
+    let xcarga = Seguridad.eliminarUsuario(req.body)
+
+    objeto.carga = xcarga
+    var salida = template(objeto);
+    res.send(salida);
+})
+
+app.get('/nuevo_x', (req,res)=>{
     console.log("llegó un post/nuevo");
     
     var archivo = fs.readFileSync('./views/nuevo.hbs','utf-8',(err,data)=>{
@@ -119,6 +167,8 @@ app.get('/nuevo', (req,res)=>{
     var salida = template(objeto);
     res.send(salida);
 })
+
+
 
 app.post('/agregar',(req, res)=>{
     console.log("llegó post/agregar");

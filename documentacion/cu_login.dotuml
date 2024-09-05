@@ -3,11 +3,19 @@ lifeline browser
 lifeline server
 lifeline seguridad
 lifeline modelo
+lifeline sesion
 
 browser     -->     server 'post/login'
 server      -->     seguridad 'registrado(req.body)'
-seguridad   -->     modelo 'validar(usu, con)'       
-seguridad   <-r-    modelo 'true'        
-server      <-r-    seguridad 'true'
-browser     <-r-    server 'menu.hbs'  
+seguridad   -->     modelo 'validar(usu, con)' 
+fragment alt "..." {
+    seguridad   <-r-    modelo 'true'
+    seguridad   --> sesion '{usuario,token,inicio}'   
+    server      <-r-    seguridad '{registrado: true,\n token: token}'
+    browser     <-r-    server 'menu.hbs'  
+case " ..."
+    seguridad   <-r-    modelo 'false'
+    server      <-r-    seguridad "{registrado: false,\n token: '' }"
+    browser     <-r-    server 'Error!!!'
+}
 }

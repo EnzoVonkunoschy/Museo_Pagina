@@ -1,0 +1,16 @@
+SequenceDiagram{
+lifeline browser
+lifeline server
+lifeline seguridad
+lifeline controlador
+lifeline modelo
+
+    browser -->  server         '/usuarios'
+    server  -->  seguridad      'listarUsuarios(data)'
+  seguridad -->  controlador    'listarUsuarios(usuarioEnSesion,data)'
+controlador -->  modelo         'getUsuarios()'
+controlador <-r- modelo         '[{Usuario}]'
+  seguridad <-r- controlador    '[{Usuario}]'
+     server <-r- seguridad      '[{Usuario}]'
+    browser <-r- server         'usuarios.hbs'
+}
