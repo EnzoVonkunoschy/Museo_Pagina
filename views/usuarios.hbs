@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Mi Empresa</h1>
+    <h2>Usuarios</h2>
+    <nav>
+        <form action="{{url}}usuarios" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Usuarios"> </form>  
+        <form action="{{url}}noticias" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Noticias"> </form>  
+        <form action="{{url}}agendas" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Agenda"> </form>  
+        <form action="{{url}}donaciones" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Donaciones"> </form>  
+        <form action="{{url}}login2" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Volver"> </form>  
+     </nav>
+    <hr>
+   
+    {{#each carga}}
+    <p>{{this.nombre}} {{this.rol}} <form action="{{../url}}eliminarusuario" method="POST" >
+        <input type="hidden" name="token" value="{{../token}}">
+        <input type="hidden" name="nombre" value="{{this.nombre}}">
+        <input type="submit" value="Eliminar">
+        </form> </p>
+    {{/each}}
+
+    <hr>
+    <label>Agregar Usuario:</label>
+   <form action="{{url}}agregarusuario" method="POST">
+    <p><label>Nombre:</label><input type="text" name="nombre"></p>
+    <p><label>Contraseña:</label><input type="text" name="contrasena"></p>
+    <p><label>Rol:</label><input type="text" name="rol"></p>
+    <input type="hidden" name="token" value="{{token}}">
+    <input type="submit" value="Agregar Usuario">
+   </form>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+SequenceDiagram{
+lifeline browser
+lifeline server
+lifeline seguridad
+lifeline controlador
+lifeline modelo
+
+    browser -->  server         '/agregarusuario'
+    server  -->  seguridad      'agregarUsuario(req.body)'
+  seguridad -->  controlador    'gregarUsuario(usuarioEnSesion, data)'
+controlador -->  modelo         'guardarUsuario()'
+controlador -->  modelo         'getUsuarios()'
+controlador <-r- modelo         '[{Usuario}]'
+  seguridad <-r- controlador    '[{Usuario}]'
+     server <-r- seguridad      '[{Usuario}]'
+    browser <-r- server         'usuarios.hbs'
+}

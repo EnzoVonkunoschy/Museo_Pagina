@@ -19,14 +19,17 @@ function validar(usu, con){
 }
 
 function guardarUsuario(data){
-
     let str_usuarios = fs.readFileSync('./db/usuarios.txt','utf-8')
     let usuarios = []
     if(str_usuarios){
         usuarios = JSON.parse(str_usuarios)
     }
+    // No agrega usuarios con el mismo nombre
+    let filUsu = usuarios.filter(x=>x.nombre == data.nombre)
+    if(filUsu.length == 0){
+        usuarios.push(data)
+    }
     
-    usuarios.push(data)
     fs.writeFileSync('./db/usuarios.txt',JSON.stringify(usuarios))
 }
 
@@ -55,6 +58,7 @@ function eliminarUsuario(nomUsu) {
 }
 
 function eliminarNoticia(id) {
+    // ! se debe desvincular el archivo de imágen !
     let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
     let noticias = [];
     if (str_noticias) {
@@ -75,10 +79,13 @@ function getUsuarios(){
     if(str_usuarios){ 
         usuarios = JSON.parse(str_usuarios);
     }
+    /* 
     let objUsuarios = [];
     usuarios.forEach(x=>objUsuarios.push(Clases.Usuario.fromJSON(x)))
 
-    return objUsuarios;
+    return objUsuarios;*/
+
+    return usuarios
 
 }
 

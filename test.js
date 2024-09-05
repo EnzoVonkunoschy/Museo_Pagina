@@ -24,12 +24,12 @@ function testNoticias(){
 
 function testValidar(){
     console.log("testValidar ------------------------------")
-    const nuevoUsuario = new Clases.Usuario("Usuario Test","Contrasena Test","Rol test")
+    const nuevoUsuario = new Clases.Usuario("Usuario TestValidar","Contrasena TestValidar","Rol testValidar")
     
     Modelo.guardarUsuario(nuevoUsuario)
 
-    let usu = "Usuario Test"
-    let con = "Contrasena Test"
+    let usu = "Usuario TestValidar"
+    let con = "Contrasena TestValidar"
     console.log(Modelo.validar(usu,con)) // devuelve true si coinciden usuario y contraseña
 
    Modelo.eliminarUsuario(nuevoUsuario.nombre)
@@ -37,23 +37,8 @@ function testValidar(){
 }
 
 
-function testUsuarios(){
-    console.log("testUsuarios ------------------------------")
-    const nuevoUsuario = new Clases.Usuario("Usuario Test","Contrasena Test","Rol test")
-    
-    Modelo.guardarUsuario(nuevoUsuario)
-    let todosLosUsuarios = Modelo.getUsuarios()
-    let filUsuarios = todosLosUsuarios.filter(x=>x.getNombre() == "Usuario Test" &&
-                                                x.getContrasena() == "Contrasena Test" &&
-                                                x.getRol() == "Rol test")
-   console.log(filUsuarios.length == 1?true:false)
 
-   Modelo.eliminarUsuario(nuevoUsuario.nombre)
-   todosLosUsuarios = Modelo.getUsuarios()
-   filUsuarios = todosLosUsuarios.filter(x=>x.getNombre() == "Usuario Test")
-   console.log(filUsuarios.length == 0 ? true : false)
 
-}
 
 function testUsuario(){
     console.log("testUsuario ----------------")
@@ -90,9 +75,59 @@ function testNoticia(){
 
 }
 
-testUsuario()
-testNoticia()
-testUsuarios()
-testValidar()
+// testUsuarios -------------------------------------------------------------
+function testGuardartUsuario(){
+    console.log("testUsuarios ------------------------------")
+    const nuevoUsuario = new Clases.Usuario("Usuario Test","Contrasena Test","Rol test")
+    
+    Modelo.guardarUsuario(nuevoUsuario)
+    let todosLosUsuarios = Modelo.getUsuarios(); 
 
-testNoticias()
+}
+
+function testGetUsuario(){
+    let todosLosUsuarios = Modelo.getUsuarios(); 
+
+    let filUsuarios = todosLosUsuarios.filter(x=>x.getNombre() == "Usuario Test" &&
+                                                x.getContrasena() == "Contrasena Test" &&
+                                                x.getRol() == "Rol test")
+   return filUsuarios.length == 1?true:false;
+}
+
+function testEliminarUsuario(){
+    const nuevoUsuario = new Clases.Usuario("Usuario Test","Contrasena Test","Rol test")
+
+    Modelo.eliminarUsuario(nuevoUsuario.nombre)
+
+    let todosLosUsuarios = Modelo.getUsuarios()
+    let filUsuarios = todosLosUsuarios.filter(x=>x.getNombre() == "Usuario Test")
+
+    return filUsuarios.length == 0?true:false;
+}
+
+function testUsuarios(){
+    testGuardartUsuario()
+    console.log(testGetUsuario())
+    console.log(testEliminarUsuario())
+    
+}
+
+//----------------------------------------------------------------
+
+function todosLosTests(){
+    testUsuario()
+    testNoticia()
+    testUsuarios()
+    testValidar()
+
+    testNoticias()
+}
+
+// todosLosTests()
+
+console.log(Modelo.getUsuarios())
+console.log(Modelo.getUsuarios()[0])
+console.log(Modelo.getUsuarios()[0].nombre)
+
+
+/* */

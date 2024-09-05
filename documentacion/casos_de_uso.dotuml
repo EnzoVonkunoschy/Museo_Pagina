@@ -1,0 +1,26 @@
+UseCaseDiagram{
+    actor administrador
+   
+
+
+    system "Página Museo" as pagMus {
+        usecase login
+        usecase "Registrar Usuario" as regUsu
+        usecase "Listar Usuarios" as lisUsu
+        usecase "Eliminar Usuario" as eliUsu
+        usecase "Agregar Noticia" as agregarnoticia
+        usecase "Listar noticias" as noticias
+        usecase "Eliminar Noticia" as eliminarnoticia
+    }
+
+    administrador assoc login
+    administrador assoc regUsu
+    administrador assoc lisUsu
+    lisUsu -e-> eliUsu
+
+    administrador assoc agregarnoticia
+    administrador assoc noticias
+    noticias -e-> eliminarnoticia
+
+
+}

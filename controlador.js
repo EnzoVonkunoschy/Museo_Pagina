@@ -1,5 +1,8 @@
+const { func } = require('joi')
 const Clases = require('./clases.js')
 const Modelo = require('./modelo.js')
+
+
 
 function damePortada(){
     const noticia = new Clases.Noticia("El museo tendrá su página","images/empresa.png","Alumnos del iES realizarán una página para el museo de Lavalle.")
@@ -19,4 +22,38 @@ function obtener(){
     return Modelo.obtener();
 }
 
-module.exports = {damePortada, nuevo, obtener}
+function listarUsuarios(usuarioEnSesion,data){
+    if(usuarioEnSesion.rol = "admin"){
+        console.log("rol = admin")
+        
+        return Modelo.getUsuarios()
+    }
+}
+
+function agregarUsuario(usuarioEnSesion, data){
+    console.log(usuarioEnSesion)
+    console.log(data)
+    if(usuarioEnSesion.rol = "admin"){
+        Modelo.guardarUsuario(new Clases.Usuario(data.nombre, data.contrasena, data.rol))
+        return Modelo.getUsuarios()
+    }
+}
+
+function eliminarUsuario(usuarioEnSesion, data){
+
+    if(usuarioEnSesion.rol == 'admin'){
+        Modelo.eliminarUsuario(data.nombre)
+        return Modelo.getUsuarios()
+    }
+}
+
+function agregarNoticia(usuarioEnSesion, data){
+    if(usuarioEnSesion.rol == 'admin'){
+        const nuevaNoticia = new Clases.Noticia(data.titular, data.imagen, data.descripcion)
+        Modelo.guardarNoticia(nuevaNoticia)
+        
+    }
+}
+
+
+module.exports = {agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, nuevo, obtener}
