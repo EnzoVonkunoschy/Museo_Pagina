@@ -1,4 +1,4 @@
-const { func } = require('joi')
+
 const Clases = require('./clases.js')
 const Modelo = require('./modelo.js')
 
