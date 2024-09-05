@@ -47,5 +47,13 @@ function eliminarUsuario(usuarioEnSesion, data){
     }
 }
 
+function agregarNoticia(usuarioEnSesion, data){
+    if(usuarioEnSesion.rol == 'admin'){
+        const nuevaNoticia = new Clases.Noticia(data.titular, data.imagen, data.descripcion)
+        Modelo.guardarNoticia(nuevaNoticia)
+        
+    }
+}
 
-module.exports = {eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, nuevo, obtener}
+
+module.exports = {agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, nuevo, obtener}

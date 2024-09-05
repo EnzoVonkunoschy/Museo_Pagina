@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Mi Empresa</h1>
+    <h2>Noticias</h2>
+    <nav>
+        <form action="{{url}}usuarios" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Usuarios"> </form>  
+        <form action="{{url}}noticias" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Noticias"> </form>  
+        <form action="{{url}}agendas" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Agenda"> </form>  
+        <form action="{{url}}donaciones" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Donaciones"> </form>  
+        <form action="{{url}}login2" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Volver"> </form>  
+     </nav>
+    <hr>
+   
+  <p>... aquí van las noticias ... </p>
+
+    <hr>
+    <label>Agregar Noticia:</label>
+   <form action="{{url}}agregarnoticia" method="POST" enctype="multipart/form-data">
+    <p><label>Titular:</label><input type="text" name="titular"></p>
+    <p><label>Descripción:</label><textarea name="descripcion"></textarea></p>
+    <fieldset><legend>Imagen</legend><input type="file" name="imagen"></fieldset> 
+    <input type="hidden" name="token" value="{{token}}">
+    <input type="submit" value="Agregar Noticia">
+   </form>
+
+</body>
+</html>

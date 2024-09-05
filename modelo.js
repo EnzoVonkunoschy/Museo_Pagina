@@ -58,6 +58,7 @@ function eliminarUsuario(nomUsu) {
 }
 
 function eliminarNoticia(id) {
+    // ! se debe desvincular el archivo de imágen !
     let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
     let noticias = [];
     if (str_noticias) {

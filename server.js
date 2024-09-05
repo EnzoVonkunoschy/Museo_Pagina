@@ -1,8 +1,10 @@
 const express = require("express");
+const multer = require('multer')
 const path = require('path')
 const Handlebars = require('handlebars');
 const fs = require('fs');
 const Seguridad = require("./seguridad.js");
+const Clases = require('./clases.js')
 
 const app = express();
 
@@ -90,6 +92,7 @@ app.post('/login2', (req,res)=>{
         });
         var template = Handlebars.compile(archivo);
         objeto.token = registrado.token
+        objeto.rutaimagen = path.join(__dirname,'views/images')
         var salida = template(objeto);
         res.send(salida);
     }else{
@@ -169,7 +172,6 @@ app.get('/nuevo_x', (req,res)=>{
 })
 
 
-
 app.post('/agregar',(req, res)=>{
     console.log("llegó post/agregar");
     console.log(req.body);
@@ -192,6 +194,47 @@ app.post('/agregar',(req, res)=>{
     var template = Handlebars.compile(archivo);
     var salida = template(objeto);
     res.send(salida);   
+})
+
+app.post('/noticias', (req, res)=>{
+    var archivo = fs.readFileSync('./views/noticias.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
+    
+    let xcarga = Seguridad.listarUsuarios(req.body)
+
+    //objeto.carga = xcarga
+    var salida = template(objeto);
+    res.send(salida);    
+})
+
+// multer --------------------------------------
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'public/images')
+    },
+    filename: function(req, file, cb){
+        cb(null, `${Date.now()}-${file.originalname}`)
+    }
+})
+
+const upload = multer({storage})
+//------------------------------------------------
+
+app.post('/agregarnoticia', upload.single('imagen') ,(req, res)=>{
+    console.log(req.body)
+    console.log(req.file)
+    //const nuevaNoticia = new Clases.Noticia(req.body.titular, req.file.filename, req.body.descripcion)
+    //const carga = {noticia: nuevaNoticia, token: req.body.token}
+    const carga = {titular: req.body.titular, imagen: req.file.filename, descripcion: req.body.descripcion, token: req.body.token}
+    Seguridad.agregarNoticia(carga)
+
+    res.send("Llegó una noticia")
 })
 
 
