@@ -1,0 +1,18 @@
+SequenceDiagram{
+lifeline browser
+lifeline server
+lifeline seguridad
+lifeline controlador
+lifeline modelo
+
+browser --> server "post('/agregarnoticia'"
+server --> seguridad "agregarNoticia(carga)"
+seguridad --> controlador "agregarNoticia(usuarioEnSesion, data)"
+controlador --> modelo "guardarNoticia(nuevaNoticia)"
+controlador --> modelo "getNoticias()"
+controlador <-r- modelo "[{Noticia}]"
+seguridad <-r- controlador "[{Noticia}]"
+server <-r- seguridad "[{Noticia}]"
+browser <-r- server "[{Noticia}]"
+
+}

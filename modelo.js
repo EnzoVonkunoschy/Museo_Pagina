@@ -58,13 +58,24 @@ function eliminarUsuario(nomUsu) {
 }
 
 function eliminarNoticia(id) {
-    // ! se debe desvincular el archivo de imágen !
+
     let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
     let noticias = [];
     if (str_noticias) {
         noticias = JSON.parse(str_noticias);
     }
+    
+    // ! se debe desvincular el archivo de imágen !
+    let notEli = noticias.filter(x=>x.id == id)
+    if(notEli.length == 1){  // si es único...
 
+        try {
+            fs.unlinkSync('./public/images/'+notEli[0].imagen);  // ...borro el archivo de imagen.
+          
+        } catch (err) {
+            console.error('Error al borrar el archivo:', err);
+        }
+    }
     // Filtrar los noticias para eliminar el que tiene el id especificado
     noticias = noticias.filter(noticia => noticia.id !== id);
 

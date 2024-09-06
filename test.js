@@ -36,10 +36,6 @@ function testValidar(){
  
 }
 
-
-
-
-
 function testUsuario(){
     console.log("testUsuario ----------------")
     const usu = new Clases.Usuario("Enzo","1234","miRol")
@@ -125,9 +121,7 @@ function todosLosTests(){
 
 // todosLosTests()
 
-console.log(Modelo.getUsuarios())
-console.log(Modelo.getUsuarios()[0])
-console.log(Modelo.getUsuarios()[0].nombre)
+Modelo.eliminarNoticia("Cx0CFII8r9wfAFO5k0ph")
 
 
 /* */

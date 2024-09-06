@@ -206,7 +206,7 @@ app.post('/noticias', (req, res)=>{
     });
     var template = Handlebars.compile(archivo);
     
-    let xcarga = Seguridad.listarUsuarios(req.body)
+    let xcarga = Seguridad.listarNoticias(req.body)
 
     //objeto.carga = xcarga
     var salida = template(objeto);
@@ -229,8 +229,7 @@ const upload = multer({storage})
 app.post('/agregarnoticia', upload.single('imagen') ,(req, res)=>{
     console.log(req.body)
     console.log(req.file)
-    //const nuevaNoticia = new Clases.Noticia(req.body.titular, req.file.filename, req.body.descripcion)
-    //const carga = {noticia: nuevaNoticia, token: req.body.token}
+
     const carga = {titular: req.body.titular, imagen: req.file.filename, descripcion: req.body.descripcion, token: req.body.token}
     Seguridad.agregarNoticia(carga)
 
