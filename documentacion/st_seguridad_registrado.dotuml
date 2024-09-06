@@ -1,0 +1,37 @@
+StateDiagram [frame=true framecolor=steelblue label="Seguridad.registrado(body)" ] {
+
+  choice ch1
+  initialstate -> ch1
+  
+  state verSesUni as 'Verificando \n sesión única'
+  ch1 -> verSesUni 'El body trae un token'
+  
+  choice ch2 /*Un solo usuario con ese token*/
+  verSesUni -> ch2
+  
+  state validando as 'Validando sesión'
+  ch2 -> validando 'Token coincide y es único'
+  
+  state bloqueando as 'Devuelvo falso'
+  ch2 -> bloqueando 'El token no coincide con ninguno'
+  
+  choice ch3
+  state verUsuCon as 'Verificando \n usuario y \n contraseña'
+  ch3 -> verUsuCon 'La contraseña \n no está \n vacía'
+  
+  ch1 -> ch3 'El body no trae token'
+  
+  choice ch4 [fillcolor=orangered]
+  state creObjSes as 'Creo el objeto \n de sesión. \n Agrego a \n colección \n retorno true + token'
+  ch4 -> creObjSes 'Usuario y contraseña coinciden'
+  verUsuCon -> ch4
+  
+  state devFal as "Devuelvo falso"
+  ch4 -> devFal "Usuario y/o contraseña \n no coinciden"
+  
+  validando -> finalstate
+  bloqueando -> finalstate
+  creObjSes -> finalstate
+  devFal -> finalstate
+  
+  }

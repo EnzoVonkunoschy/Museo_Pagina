@@ -1,0 +1,18 @@
+StateDiagram [frame=true framecolor=steelblue label="Controlador" ] {
+state ideRol as 'identificando rol'
+  
+  initialstate -> ideRol
+  
+  choice ch_rol
+  
+  ideRol -> ch_rol
+  state ejeCu as 'Ejecutando \n caso de uso'
+  ch_rol -> ejeCu 'El rol puede ejecutar \n el caso de uso'
+  
+  state bloCu as 'Bloqueando ejecución \n devolviendo \n colección vacía' [fillcolor=orangered]
+  ch_rol -> bloCu 'El rol no puede ejecutar el caso de uso'
+  
+  ejeCu -> finalstate
+  bloCu -> finalstate
+
+}

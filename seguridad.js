@@ -66,9 +66,13 @@ function eliminarUsuario(data){
     return Controlador.eliminarUsuario(usuarioEnSesion, data)
 }
 
+function listarNoticias(data){
+
+}
+
 function agregarNoticia(data){
     const usuarioEnSesion = dameUsuario(data.token)
     Controlador.agregarNoticia(usuarioEnSesion, data)
 }
 
-module.exports = {agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios};
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios};
