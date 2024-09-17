@@ -1,6 +1,18 @@
 const fs = require('fs')
 const Clases = require('./clases.js')
 
+function leerNoticias() {
+    try {
+        const contenido = fs.readFileSync('./db/noticias.txt', 'utf-8');
+        const noticias = JSON.parse(contenido); // Parseamos el contenido como un array de objetos
+        return noticias;
+    } catch (error) {
+        console.error('Error al leer el archivo:', error.message);
+        return [];
+    }
+}
+
+leerNoticias()
 function validar(usu, con){
     // Levanta todos los usarios de la unidad local
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
@@ -58,6 +70,31 @@ function eliminarUsuario(nomUsu) {
 }
 
 function eliminarNoticia(id) {
+    try {
+        let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
+        let noticias = [];
+        if (str_noticias) {
+            noticias = JSON.parse(str_noticias);
+        }
+
+        // Filtrar las noticias para eliminar la que tiene el ID especificado
+        const noticiasFiltradas = noticias.filter(noticia => noticia.id !== id);
+
+        // Guardar las noticias actualizadas en el archivo
+        fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticiasFiltradas));
+
+        // Registro: Imprimir el ID de la noticia eliminada
+        console.log(`Noticia con ID ${id} eliminada correctamente.`);
+
+        // Devolver true si la eliminación fue exitosa, o false si no se encontró la noticia
+        return noticiasFiltradas.length < noticias.length;
+    } catch (error) {
+        console.error('Error al eliminar la noticia:', error);
+        return false;
+    }
+}
+
+/*function eliminarNoticia(id) {
 
     let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
     let noticias = [];
@@ -81,7 +118,7 @@ function eliminarNoticia(id) {
 
     fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticias));
 }
-
+*/
 
 function getUsuarios(){    
  
@@ -104,6 +141,7 @@ function getNoticias(){
     
     let str_noticias = fs.readFileSync('./db/noticias.txt','utf-8')
     let noticias = []
+    console.log(noticias);
     if(str_noticias){ 
         noticias = JSON.parse(str_noticias);
     }
@@ -137,4 +175,4 @@ function obtener(){
 
 }
 
-module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia}
+module.exports = {leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia}

@@ -67,6 +67,10 @@ function eliminarUsuario(data){
 }
 
 function listarNoticias(data){
+    console.log("-->[seguridad] 'listarNoticias1'")
+
+    const usuarioEnSesion = dameUsuario(data.token)
+    return Controlador.listarNoticias(usuarioEnSesion, data)
 
 }
 
@@ -75,4 +79,31 @@ function agregarNoticia(data){
     Controlador.agregarNoticia(usuarioEnSesion, data)
 }
 
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios};
+function eliminarNoticia(data) {
+    try {
+        // Obtener el usuario en sesión
+        const usuarioEnSesion = dameUsuario(data.token);
+
+        if (!usuarioEnSesion) {
+            // Si no se encuentra un usuario válido, devuelve un mensaje específico
+            console.error(`No se encontró un usuario válido para el token: ${data.token}`);
+            return false;
+        }
+
+        // Llamar al controlador para eliminar la noticia
+        const eliminacionExitosa = Controlador.eliminarNoticia(usuarioEnSesion, data);
+
+        if (eliminacionExitosa) {
+            console.log(`Noticia con ID ${data.id} eliminada correctamente por ${usuarioEnSesion.usuario}.`);
+            return true;
+        } else {
+            console.log(`No se encontró la noticia con ID ${data.id} o hubo un problema al eliminarla.`);
+            return false;
+        }
+    } catch (error) {
+        console.error("Error al eliminar la noticia:", error);
+        return false;
+    }
+}
+
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios, eliminarNoticia};

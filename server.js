@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended : false}))
 
 const port = 3000;
 
-app.use("/", express.static(path.join(__dirname, "/views")));
+app.use("/", express.static(path.join(__dirname, "/public")));
 
 // Especifica la ubicación de tus archivos .hbs
 app.set("views", path.join(__dirname, "views")); // Ruta a la carpeta "views"
@@ -92,7 +92,7 @@ app.post('/login2', (req,res)=>{
         });
         var template = Handlebars.compile(archivo);
         objeto.token = registrado.token
-        objeto.rutaimagen = path.join(__dirname,'views/images')
+        objeto.rutaimagen = path.join(__dirname,'public/images')
         var salida = template(objeto);
         res.send(salida);
     }else{
@@ -208,7 +208,7 @@ app.post('/noticias', (req, res)=>{
     
     let xcarga = Seguridad.listarNoticias(req.body)
 
-    //objeto.carga = xcarga
+    objeto.carga = xcarga
     var salida = template(objeto);
     res.send(salida);    
 })

@@ -6,18 +6,32 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Mi Empresa</h1>
-    <h2>Noticias</h2>
-    <nav>
-        <form action="{{url}}usuarios" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Usuarios"> </form>  
-        <form action="{{url}}noticias" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Noticias"> </form>  
-        <form action="{{url}}agendas" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Agenda"> </form>  
-        <form action="{{url}}donaciones" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Donaciones"> </form>  
-        <form action="{{url}}login2" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Volver"> </form>  
-     </nav>
-    <hr>
-   
-  <p>... aquí van las noticias ... </p>
+<h1>Mi Empresa</h1>
+<h2>Noticias</h2>
+<nav>
+    <form action="{{url}}usuarios" method="POST">
+        <input name="token" type="hidden" value="{{token}}">
+        <input type="submit" value="Usuarios">
+    </form>
+    <form action="{{url}}noticias" method="POST">
+        <input name="token" type="hidden" value="{{token}}">
+        <input type="submit" value="Noticias">
+    </form>
+    <!-- Otras opciones de navegación aquí -->
+</nav>
+<hr>
+
+{{#each carga}}
+  <p>
+    {{this.titular}} {{this.descripcion}}
+    <img src="/images/{{this.imagen}}" alt="imagen">
+    <form action="{{../url}}eliminarnoticia" method="POST">
+      <input type="hidden" name="token" value="{{../token}}">
+      <input type="hidden" name="id" value="{{this.id}}">
+      <input type="submit" value="Eliminar">
+    </form>
+  </p>
+{{/each}}
 
     <hr>
     <label>Agregar Noticia:</label>

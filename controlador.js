@@ -47,8 +47,28 @@ function eliminarUsuario(usuarioEnSesion, data){
     }
 }
 
-function listarNoticias(usuarioEnSesion, data){
-    // implementar
+function listarNoticias(usuarioEnSesion, data) {
+    if (usuarioEnSesion.rol = "admin") {
+        // Obtener la lista de noticias utilizando la función del modelo
+        const noticias = Modelo.leerNoticias();
+
+        // Formatear las noticias según el formato deseado
+        const noticiasFormateadas = noticias.map((noticia) => {
+            return {
+                id: noticia.id,
+                titular: noticia.titular,
+                imagen: noticia.imagen,
+                descripcion: noticia.descripcion,
+                // Puedes agregar más propiedades aquí si es necesario
+            };
+        });
+
+        // Devolver las noticias formateadas
+        return noticiasFormateadas;
+    } else {
+        console.log("El usuario no tiene permisos para listar noticias.");
+        return [];
+    }
 }
 
 function agregarNoticia(usuarioEnSesion, data){
@@ -59,5 +79,11 @@ function agregarNoticia(usuarioEnSesion, data){
     }
 }
 
+function eliminarNoticia(usuarioEnSesion, data) {
+    if(usuarioEnSesion.rol == 'admin'){
+        Modelo.eliminarNoticia(data.id)
+        return Modelo.getNoticias()
+    }
+}
 
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, nuevo, obtener}
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, nuevo, obtener, eliminarNoticia}
