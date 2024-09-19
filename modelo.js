@@ -70,55 +70,25 @@ function eliminarUsuario(nomUsu) {
 }
 
 function eliminarNoticia(id) {
-    try {
-        let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
-        let noticias = [];
-        if (str_noticias) {
-            noticias = JSON.parse(str_noticias);
-        }
-
-        // Filtrar las noticias para eliminar la que tiene el ID especificado
-        const noticiasFiltradas = noticias.filter(noticia => noticia.id !== id);
-
-        // Guardar las noticias actualizadas en el archivo
-        fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticiasFiltradas));
-
-        // Registro: Imprimir el ID de la noticia eliminada
-        console.log(`Noticia con ID ${id} eliminada correctamente.`);
-
-        // Devolver true si la eliminación fue exitosa, o false si no se encontró la noticia
-        return noticiasFiltradas.length < noticias.length;
-    } catch (error) {
-        console.error('Error al eliminar la noticia:', error);
-        return false;
-    }
-}
-
-/*function eliminarNoticia(id) {
-
     let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
     let noticias = [];
     if (str_noticias) {
         noticias = JSON.parse(str_noticias);
     }
     
-    // ! se debe desvincular el archivo de imágen !
-    let notEli = noticias.filter(x=>x.id == id)
-    if(notEli.length == 1){  // si es único...
-
+    let noticiaAEliminar = noticias.find(x => x.id === id);
+    if (noticiaAEliminar) {
         try {
-            fs.unlinkSync('./public/images/'+notEli[0].imagen);  // ...borro el archivo de imagen.
-          
+            fs.unlinkSync('./public/images/' + noticiaAEliminar.imagen);
         } catch (err) {
-            console.error('Error al borrar el archivo:', err);
+            console.error('Error al borrar el archivo de imagen:', err);
         }
     }
-    // Filtrar los noticias para eliminar el que tiene el id especificado
-    noticias = noticias.filter(noticia => noticia.id !== id);
 
+    noticias = noticias.filter(noticia => noticia.id !== id);
     fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticias));
 }
-*/
+
 
 function getUsuarios(){    
  

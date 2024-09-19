@@ -11,7 +11,7 @@ const app = express();
 const Controlador = require('./controlador');
 
 app.use(express.json());
-app.use(express.urlencoded({extended : false}))
+app.use(express.urlencoded({extended : true}))
 
 const port = 3000;
 
@@ -236,7 +236,23 @@ app.post('/agregarnoticia', upload.single('imagen') ,(req, res)=>{
     res.send("Llegó una noticia")
 })
 
+app.post('/eliminarnoticia', async (req, res) => {
+    const { token, id } = req.body;
 
+    try {
+        const usuarioEnSesion = await Seguridad.dameUsuario(token);
+        const resultado = await Controlador.eliminarNoticia(usuarioEnSesion, { id });
+        
+        if (resultado.success) {
+            res.send("Llegó una noticia");
+        } else {
+            res.status(403).send(resultado.message);
+        }
+    } catch (error) {
+        console.error('Error al eliminar noticia:', error);
+        res.status(500).send('Error interno del servidor.');
+    }
+})
 
 app.listen(port, ()=>{
     console.log(`Escuchando en el puerto ${port}`)

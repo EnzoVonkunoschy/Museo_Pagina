@@ -41,10 +41,13 @@ function registrado(body){
     }
 }
 
-function dameUsuario(token){
-    let usu = sesion.filter(x=>x.token == token)
-    console.log(usu[0].usuario)
-    return(usu[0].usuario)
+function dameUsuario(token) {
+    let usu = sesion.filter(x => x.token == token);
+    if (usu.length > 0) {
+        console.log(usu[0].usuario);
+        return usu[0].usuario;
+    }
+    return null;
 }
 
 function listarUsuarios(data){
@@ -79,31 +82,5 @@ function agregarNoticia(data){
     Controlador.agregarNoticia(usuarioEnSesion, data)
 }
 
-function eliminarNoticia(data) {
-    try {
-        // Obtener el usuario en sesión
-        const usuarioEnSesion = dameUsuario(data.token);
 
-        if (!usuarioEnSesion) {
-            // Si no se encuentra un usuario válido, devuelve un mensaje específico
-            console.error(`No se encontró un usuario válido para el token: ${data.token}`);
-            return false;
-        }
-
-        // Llamar al controlador para eliminar la noticia
-        const eliminacionExitosa = Controlador.eliminarNoticia(usuarioEnSesion, data);
-
-        if (eliminacionExitosa) {
-            console.log(`Noticia con ID ${data.id} eliminada correctamente por ${usuarioEnSesion.usuario}.`);
-            return true;
-        } else {
-            console.log(`No se encontró la noticia con ID ${data.id} o hubo un problema al eliminarla.`);
-            return false;
-        }
-    } catch (error) {
-        console.error("Error al eliminar la noticia:", error);
-        return false;
-    }
-}
-
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios, eliminarNoticia};
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios, dameUsuario};
