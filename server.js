@@ -236,22 +236,22 @@ app.post('/agregarnoticia', upload.single('imagen') ,(req, res)=>{
     res.send("Llegó una noticia")
 })
 
-app.post('/eliminarnoticia', async (req, res) => {
-    const { token, id } = req.body;
-
-    try {
-        const usuarioEnSesion = await Seguridad.dameUsuario(token);
-        const resultado = await Controlador.eliminarNoticia(usuarioEnSesion, { id });
-        
-        if (resultado.success) {
-            res.send("Llegó una noticia");
-        } else {
-            res.status(403).send(resultado.message);
+app.post('/eliminarnoticia', (req, res)=>{
+   
+    var archivo = fs.readFileSync('./views/noticias.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
         }
-    } catch (error) {
-        console.error('Error al eliminar noticia:', error);
-        res.status(500).send('Error interno del servidor.');
-    }
+    });
+    var template = Handlebars.compile(archivo);
+
+    let xcarga = Seguridad.eliminarNoticia(req.body)
+
+    objeto.carga = xcarga
+    var salida = template(objeto);
+    res.send(salida);
 })
 
 app.listen(port, ()=>{
