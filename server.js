@@ -229,11 +229,21 @@ const upload = multer({storage})
 app.post('/agregarnoticia', upload.single('imagen') ,(req, res)=>{
     console.log(req.body)
     console.log(req.file)
+    var archivo = fs.readFileSync('./views/noticias.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
 
     const carga = {titular: req.body.titular, imagen: req.file.filename, descripcion: req.body.descripcion, token: req.body.token}
-    Seguridad.agregarNoticia(carga)
+    let xcarga = Seguridad.agregarNoticia(carga)
 
-    res.send("Llegó una noticia")
+    objeto.carga = xcarga
+    var salida = template(objeto)
+    res.send(salida)
 })
 
 app.post('/eliminarnoticia', (req, res)=>{

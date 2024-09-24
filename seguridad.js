@@ -79,7 +79,7 @@ function listarNoticias(data){
 
 function agregarNoticia(data){
     const usuarioEnSesion = dameUsuario(data.token)
-    Controlador.agregarNoticia(usuarioEnSesion, data)
+    return Controlador.agregarNoticia(usuarioEnSesion, data)
 }
 
 function eliminarNoticia(data){
