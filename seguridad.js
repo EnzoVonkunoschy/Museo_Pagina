@@ -41,10 +41,13 @@ function registrado(body){
     }
 }
 
-function dameUsuario(token){
-    let usu = sesion.filter(x=>x.token == token)
-    console.log(usu[0].usuario)
-    return(usu[0].usuario)
+function dameUsuario(token) {
+    let usu = sesion.filter(x => x.token == token);
+    if (usu.length > 0) {
+        console.log(usu[0].usuario);
+        return usu[0].usuario;
+    }
+    return null;
 }
 
 function listarUsuarios(data){
@@ -67,12 +70,21 @@ function eliminarUsuario(data){
 }
 
 function listarNoticias(data){
+    console.log("-->[seguridad] 'listarNoticias1'")
+
+    const usuarioEnSesion = dameUsuario(data.token)
+    return Controlador.listarNoticias(usuarioEnSesion, data)
 
 }
 
 function agregarNoticia(data){
     const usuarioEnSesion = dameUsuario(data.token)
-    Controlador.agregarNoticia(usuarioEnSesion, data)
+    return Controlador.agregarNoticia(usuarioEnSesion, data)
 }
 
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, registrado, listarUsuarios};
+function eliminarNoticia(data){
+    const usuarioEnSesion = dameUsuario(data.token)
+    return Controlador.eliminarNoticia(usuarioEnSesion, data)
+}
+
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, eliminarNoticia, agregarUsuario, registrado, listarUsuarios, dameUsuario};

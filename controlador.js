@@ -1,4 +1,3 @@
-
 const Clases = require('./clases.js')
 const Modelo = require('./modelo.js')
 
@@ -23,7 +22,7 @@ function obtener(){
 }
 
 function listarUsuarios(usuarioEnSesion,data){
-    if(usuarioEnSesion.rol = "admin"){
+    if(usuarioEnSesion.rol === "admin"){
         console.log("rol = admin")
         
         return Modelo.getUsuarios()
@@ -33,7 +32,7 @@ function listarUsuarios(usuarioEnSesion,data){
 function agregarUsuario(usuarioEnSesion, data){
     console.log(usuarioEnSesion)
     console.log(data)
-    if(usuarioEnSesion.rol = "admin"){
+    if(usuarioEnSesion.rol === "admin"){
         Modelo.guardarUsuario(new Clases.Usuario(data.nombre, data.contrasena, data.rol))
         return Modelo.getUsuarios()
     }
@@ -41,23 +40,34 @@ function agregarUsuario(usuarioEnSesion, data){
 
 function eliminarUsuario(usuarioEnSesion, data){
 
-    if(usuarioEnSesion.rol == 'admin'){
+    if(usuarioEnSesion.rol === 'admin'){
         Modelo.eliminarUsuario(data.nombre)
         return Modelo.getUsuarios()
     }
 }
 
-function listarNoticias(usuarioEnSesion, data){
-    // implementar
-}
-
-function agregarNoticia(usuarioEnSesion, data){
-    if(usuarioEnSesion.rol == 'admin'){
-        const nuevaNoticia = new Clases.Noticia(data.titular, data.imagen, data.descripcion)
-        Modelo.guardarNoticia(nuevaNoticia)
+function listarNoticias(usuarioEnSesion, data) {
+    if(usuarioEnSesion.rol === "admin"){
+        console.log("rol = admin")
         
+        return Modelo.getNoticias()
     }
 }
 
+function agregarNoticia(usuarioEnSesion, data){
+    console.log(usuarioEnSesion)
+    console.log(data)
+    if(usuarioEnSesion.rol === 'admin'){
+        Modelo.guardarNoticia(new Clases.Noticia(data.titular, data.imagen, data.descripcion))
+        return Modelo.getNoticias()
+    }
+}
 
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, nuevo, obtener}
+function eliminarNoticia(usuarioEnSesion, data) {
+    if(usuarioEnSesion.rol === 'admin'){
+        Modelo.eliminarNoticia(data.id)
+        return Modelo.getNoticias()
+    }
+}
+
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener}

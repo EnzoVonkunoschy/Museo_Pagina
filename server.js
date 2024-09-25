@@ -11,11 +11,11 @@ const app = express();
 const Controlador = require('./controlador');
 
 app.use(express.json());
-app.use(express.urlencoded({extended : false}))
+app.use(express.urlencoded({extended : true}))
 
 const port = 3000;
 
-app.use("/", express.static(path.join(__dirname, "/views")));
+app.use("/", express.static(path.join(__dirname, "/public")));
 
 // Especifica la ubicación de tus archivos .hbs
 app.set("views", path.join(__dirname, "views")); // Ruta a la carpeta "views"
@@ -92,7 +92,7 @@ app.post('/login2', (req,res)=>{
         });
         var template = Handlebars.compile(archivo);
         objeto.token = registrado.token
-        objeto.rutaimagen = path.join(__dirname,'views/images')
+        objeto.rutaimagen = path.join(__dirname,'public/images')
         var salida = template(objeto);
         res.send(salida);
     }else{
@@ -208,7 +208,7 @@ app.post('/noticias', (req, res)=>{
     
     let xcarga = Seguridad.listarNoticias(req.body)
 
-    //objeto.carga = xcarga
+    objeto.carga = xcarga
     var salida = template(objeto);
     res.send(salida);    
 })
@@ -229,14 +229,40 @@ const upload = multer({storage})
 app.post('/agregarnoticia', upload.single('imagen') ,(req, res)=>{
     console.log(req.body)
     console.log(req.file)
+    var archivo = fs.readFileSync('./views/noticias.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
 
     const carga = {titular: req.body.titular, imagen: req.file.filename, descripcion: req.body.descripcion, token: req.body.token}
-    Seguridad.agregarNoticia(carga)
+    let xcarga = Seguridad.agregarNoticia(carga)
 
-    res.send("Llegó una noticia")
+    objeto.carga = xcarga
+    var salida = template(objeto)
+    res.send(salida)
 })
 
+app.post('/eliminarnoticia', (req, res)=>{
+   
+    var archivo = fs.readFileSync('./views/noticias.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
 
+    let xcarga = Seguridad.eliminarNoticia(req.body)
+
+    objeto.carga = xcarga
+    var salida = template(objeto);
+    res.send(salida);
+})
 
 app.listen(port, ()=>{
     console.log(`Escuchando en el puerto ${port}`)

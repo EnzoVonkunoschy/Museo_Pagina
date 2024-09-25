@@ -1,6 +1,18 @@
 const fs = require('fs')
 const Clases = require('./clases.js')
 
+function leerNoticias() {
+    try {
+        const contenido = fs.readFileSync('./db/noticias.txt', 'utf-8');
+        const noticias = JSON.parse(contenido); // Parseamos el contenido como un array de objetos
+        return noticias;
+    } catch (error) {
+        console.error('Error al leer el archivo:', error.message);
+        return [];
+    }
+}
+
+leerNoticias()
 function validar(usu, con){
     // Levanta todos los usarios de la unidad local
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
@@ -58,27 +70,22 @@ function eliminarUsuario(nomUsu) {
 }
 
 function eliminarNoticia(id) {
-
     let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
     let noticias = [];
     if (str_noticias) {
         noticias = JSON.parse(str_noticias);
     }
     
-    // ! se debe desvincular el archivo de imágen !
-    let notEli = noticias.filter(x=>x.id == id)
-    if(notEli.length == 1){  // si es único...
-
+    let noticiaAEliminar = noticias.find(x => x.id === id);
+    if (noticiaAEliminar) {
         try {
-            fs.unlinkSync('./public/images/'+notEli[0].imagen);  // ...borro el archivo de imagen.
-          
+            fs.unlinkSync('./public/images/' + noticiaAEliminar.imagen);
         } catch (err) {
-            console.error('Error al borrar el archivo:', err);
+            console.error('Error al borrar el archivo de imagen:', err);
         }
     }
-    // Filtrar los noticias para eliminar el que tiene el id especificado
-    noticias = noticias.filter(noticia => noticia.id !== id);
 
+    noticias = noticias.filter(noticia => noticia.id !== id);
     fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticias));
 }
 
@@ -104,6 +111,7 @@ function getNoticias(){
     
     let str_noticias = fs.readFileSync('./db/noticias.txt','utf-8')
     let noticias = []
+    console.log(noticias);
     if(str_noticias){ 
         noticias = JSON.parse(str_noticias);
     }
@@ -137,4 +145,4 @@ function obtener(){
 
 }
 
-module.exports = {guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia}
+module.exports = {leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia}
