@@ -17,7 +17,19 @@
         <input name="token" type="hidden" value="{{token}}">
         <input type="submit" value="Noticias">
     </form>
-    <!-- Otras opciones de navegación aquí -->
+    <form action="{{url}}agendas" method="POST">
+      <input name="token" type="hidden" value="{{token}}">
+      <input type="submit" value="Agenda"> 
+    </form>  
+    <form action="{{url}}donaciones" method="POST">
+      <input name="token" type="hidden" value="{{token}}">
+      <input type="submit" value="Donaciones"> 
+    </form>  
+    <form action="{{url}}login2" method="POST">
+      <input name="token" type="hidden" value="{{token}}">
+      <input type="submit" value="Volver"> 
+    </form>  
+     
 </nav>
 <hr>
 
