@@ -17,20 +17,33 @@
         <input name="token" type="hidden" value="{{token}}">
         <input type="submit" value="Noticias">
     </form>
-    <!-- Otras opciones de navegación aquí -->
+    <form action="{{url}}agendas" method="POST">
+      <input name="token" type="hidden" value="{{token}}">
+      <input type="submit" value="Agenda"> 
+    </form>  
+    <form action="{{url}}donaciones" method="POST">
+      <input name="token" type="hidden" value="{{token}}">
+      <input type="submit" value="Donaciones"> 
+    </form>  
+    <form action="{{url}}login2" method="POST">
+      <input name="token" type="hidden" value="{{token}}">
+      <input type="submit" value="Volver"> 
+    </form>  
+     
 </nav>
 <hr>
 
 {{#each carga}}
-  <p>
-    {{this.titular}} {{this.descripcion}}
-    <img src="/images/{{this.imagen}}" alt="imagen">
+ 
+    <h2>{{this.titular}}</h2>
+    <p>{{this.descripcion}}</p>
+    <img src="/images/{{this.imagen}}" alt="imagen" style="width: 300px;">
     <form action="{{../url}}eliminarnoticia" method="POST">
       <input type="hidden" name="token" value="{{../token}}">
       <input type="hidden" name="id" value="{{this.id}}">
       <input type="submit" value="Eliminar">
     </form>
-  </p>
+
 {{/each}}
 
     <hr>
