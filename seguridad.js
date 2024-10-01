@@ -87,4 +87,7 @@ function eliminarNoticia(data){
     return Controlador.eliminarNoticia(usuarioEnSesion, data)
 }
 
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, eliminarNoticia, agregarUsuario, registrado, listarUsuarios, dameUsuario};
+function agregarVisita(data){
+    return Controlador.agregarVisita(data)
+}
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, eliminarNoticia, agregarUsuario, registrado, listarUsuarios, dameUsuario, agregarVisita};

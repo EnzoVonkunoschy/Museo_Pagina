@@ -70,4 +70,8 @@ function eliminarNoticia(usuarioEnSesion, data) {
     }
 }
 
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener}
+function agregarVisita(data) {
+    Modelo.guardarVisita(new Clases.Visita(data.nombre, data.email, data.telefono, data.fechaVisita, data.cantidadPer, data.guia)); 
+    return Modelo.getVisitas();
+}
+module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita}

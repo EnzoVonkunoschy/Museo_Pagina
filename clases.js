@@ -61,6 +61,78 @@ class Noticia{
     }    
 }
 
+
+class Visita{
+    constructor(nombre, email, numtel, fechaVisita, cantidadPer, guia){
+        this.id = Helper.getUuid()
+        this.nombre = nombre;
+        this.email = email;
+        this.numtel = numtel;
+        this.fechaVisita = fechaVisita;
+        this.cantidadPer = cantidadPer;
+        this.guia = guia;
+        this.class = "Visita";
+    }
+
+    getNombre(){
+        return this.nombre;
+    }
+
+    getEmail(){
+        return this.email;
+    }
+
+    getNumtel(){
+        return this.numtel;
+    }
+
+    getFechavisita(){
+        return this.fechaVisita;
+    }
+
+    getCantidadpersonas(){
+        return this.cantidadPersonas;
+    }
+
+    getGuia(){
+        return this.guia;
+    }
+
+    setNombre(nom){
+        this.nombre = nom;
+    }
+
+    setEmail(email){
+        this.email = email;
+    }
+
+    setNumtel(numt){
+        this.numtel = numt;
+    }
+    setFechavisita(fv){
+        this.fechaVisita = fv;
+    }
+    setCantidadper(cp){
+        this.cantidadPer = cp;
+    }
+    setGuia(guia){
+        this.guia = guia;
+    }
+    static fromJSON(json) {
+        if (json.class == "Visita") {
+            let nuevaVisita = new Visita();
+            nuevaVisita.id = json.id;
+            nuevaVisita.nombre = json.nombre;
+            nuevaVisita.numtel = json.numtel;
+            nuevaVisita.fechaVisita = json.fechaVisita;
+            nuevaVisita.cantidadPer = json.cantidadPer;
+            nuevaVisita.guia = json.guia;
+            nuevaVisita.class = json.class;
+    
+            return nuevaVisita;  
+        }
+    }   
+}
 class Mercaderia{
     constructor(nom, cant, imp){
         this.nombre = nom;
@@ -129,4 +201,4 @@ class Perfil {
 }
 
 
-module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia}
+module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia, Visita}
