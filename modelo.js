@@ -55,7 +55,16 @@ function guardarNoticia(data){
     noticias.push(data)
     fs.writeFileSync('./db/noticias.txt',JSON.stringify(noticias))
 }
-
+function guardarVisita(data){
+    let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
+    let visitas = []
+    if(str_visitas){
+        visitas = JSON.parse(str_visitas)
+    }
+    
+    visitas.push(data)
+    fs.writeFileSync('./db/visitas.txt',JSON.stringify(visitas))
+}
 function eliminarUsuario(nomUsu) {
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
     let usuarios = [];
@@ -121,6 +130,19 @@ function getNoticias(){
     return objNoticias;
 }
 
+function getVisitas(){
+    
+    let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
+    let visitas = []
+    console.log(visitas);
+    if(str_visitas){ 
+        visitas = JSON.parse(str_visitas);
+    }
+    let objVisitas = [];
+    visitas.forEach(x=>objVisitas.push(Clases.Visita.fromJSON(x)))
+
+    return objVisitas;
+}
 function guardar(data){
 
     let str_mercaderias = fs.readFileSync('./db.txt','utf-8')
@@ -145,4 +167,4 @@ function obtener(){
 
 }
 
-module.exports = {leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia}
+module.exports = {leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, guardarVisita, getVisitas}

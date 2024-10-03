@@ -264,6 +264,27 @@ app.post('/eliminarnoticia', (req, res)=>{
     res.send(salida);
 })
 
+app.post('/visitas', (req, res) => {
+
+    var archivo = fs.readFileSync('./views/index.hbs', 'utf-8', (err, data) => {
+        if (err) {
+            console.log(err);         
+        } else {
+            console.log("Formulario de visitas leído correctamente");
+        }
+    });
+
+    var template = Handlebars.compile(archivo);
+
+    const datosVisita = { nombre: req.body.nombre, email: req.body.email, telefono: req.body.numtel, fechaVisita: req.body.fechaVisita, cantidadPer: req.body.cantidadPer, guia: req.body.guia };   
+   
+    let carga = Seguridad.agregarVisita(datosVisita)
+
+    objeto.visita = carga;
+
+    var salida = template(objeto);
+    res.send(salida);
+});
 app.listen(port, ()=>{
     console.log(`Escuchando en el puerto ${port}`)
 });

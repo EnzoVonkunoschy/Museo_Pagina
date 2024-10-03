@@ -6,13 +6,40 @@
     <title>Document</title>
 </head>
 <body>
-    <pre>{{url}}</pre>
-    
+    {{!--
+    <pre>{{url}}</pre> --}}
+
     <h1>Museo Histórico y Natural de Lavalle</h1>
     <pre>{{portada.noticia.titular}}</pre>
-    
+
     <img src={{portada.noticia.imagen}} alt="imagen">
     <p>{{portada.noticia.descripcion}}</p>
+
+    <h3>Formulario para Visitas</h3>
+    <form action="/visitas" method="POST">
+        <label for="nombre">Nombre Completo:</label><br>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="email">Correo Electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="numCelu">Teléfono de contacto:</label><br>
+        <input type="text" id="numtel" name="numtel" required><br><br>
+
+        <label for="fechaVisita">Fecha de Visita:</label><br>
+        <input type="date" id="fechaVisita" name="fechaVisita" required><br><br>
+
+        <label for="cantidadPer">Cantidad de Personas:</label><br>
+        <input type="number" id="cantidadPer" name="cantidadPer" min="1" required><br><br>
+
+        <label for="guia">¿Requiere Guía?</label><br>
+        <select id="guia" name="guia" required>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+        </select><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
 
 </body>
 </html>
