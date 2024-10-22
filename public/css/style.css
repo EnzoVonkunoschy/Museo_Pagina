@@ -1,0 +1,189 @@
+/* Colores institucionales */
+        :root {
+            --naranja: #F39200;
+            --amarillo: #F5B410;
+            --azul: #223362;
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html{
+            font-family: 'Nunito', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f3e6;
+            margin: 0;
+            padding: 20px;
+            height: 100%;
+            color: var(--azul);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight:800;
+            color: var(--naranja);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+       
+        h3 {
+            font-size: 1.5rem;
+            color: var(--naranja);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo del formulario */
+        .formVis {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+            gap: 20px; /* Espacio entre las columnas y filas */
+        }
+
+        .login {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: grid;
+            gap: 20px; /* Espacio entre las columnas y filas */
+        }
+        .agregUsuario, .agregNoticia{
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: grid;
+            gap: 20px; /* Espacio entre las columnas y filas */
+        }
+
+        input[type="submit"] {
+            background-color: var(--naranja);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: auto; /* Evita que el botón ocupe todo el ancho */
+            display: inline-block;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: var(--amarillo);
+        }
+
+        .field-group {
+           display: flex;
+           flex-direction: column;
+        }
+
+        label {
+           font-weight: bold;
+           margin-bottom: 5px;
+           color: var(--azul);
+        }
+
+        input, select {
+           padding: 8px;
+           border-radius: 5px;
+           border: 1px solid #ccc;
+           width: 100%;
+        }
+
+        .button-group {
+           grid-column: span 2; /* El botón ocupará el ancho completo de las dos columnas */
+           display: flex;
+           justify-content: center;
+        }
+
+        button {
+           padding: 10px 20px;
+           background-color: var(--azul);
+           color: white;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+        }
+
+        button:hover {
+           background-color: darkblue;
+        }
+
+        @media (max-width: 600px) {
+        form {
+           grid-template-columns: 1fr; /* En pantallas pequeñas, una sola columna */
+        }
+        }
+
+
+        /* Imagen destacada */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        /* Estilo del menú */
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        nav form {
+            margin: 0 10px;
+        }
+
+        nav input[type="submit"] {
+            background-color: var(--azul);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        nav input[type="submit"]:hover {
+            background-color: var(--naranja);
+        }
+
+        
+        input[type="text"],
+        textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        }
+
+
+
+        /* Estilo para el campo de archivo (input type="file") */
+        fieldset {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        }
+
+        legend {
+        color: var(--azul);
+        font-weight: bold;
+        }
+

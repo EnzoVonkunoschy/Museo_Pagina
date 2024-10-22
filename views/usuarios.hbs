@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <h1>Mi Empresa</h1>
@@ -26,6 +30,7 @@
     {{/each}}
 
     <hr>
+ <div class="agregUsuario">
     <label>Agregar Usuario:</label>
    <form action="{{url}}agregarusuario" method="POST">
     <p><label>Nombre:</label><input type="text" name="nombre"></p>
@@ -34,6 +39,6 @@
     <input type="hidden" name="token" value="{{token}}">
     <input type="submit" value="Agregar Usuario">
    </form>
-
+ </div>
 </body>
 </html>

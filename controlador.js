@@ -4,7 +4,7 @@ const Modelo = require('./modelo.js')
 
 
 function damePortada(){
-    const noticia = new Clases.Noticia("El museo tendrá su página","images/empresa.png","Alumnos del iES realizarán una página para el museo de Lavalle.")
+    const noticia = new Clases.Noticia("El museo tendrá su página","images/museo.jpeg","Alumnos del iES realizarán una página para el museo de Lavalle.")
     const portada = new Clases.Portada(noticia)
     return portada;
     
