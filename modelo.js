@@ -12,7 +12,7 @@ function leerNoticias() {
     }
 }
 
-leerNoticias()
+//leerNoticias()
 function validar(usu, con){
     // Levanta todos los usarios de la unidad local
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
@@ -55,6 +55,7 @@ function guardarNoticia(data){
     noticias.push(data)
     fs.writeFileSync('./db/noticias.txt',JSON.stringify(noticias))
 }
+
 function guardarVisita(data){
     let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
     let visitas = []
@@ -65,6 +66,7 @@ function guardarVisita(data){
     visitas.push(data)
     fs.writeFileSync('./db/visitas.txt',JSON.stringify(visitas))
 }
+
 function eliminarUsuario(nomUsu) {
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
     let usuarios = [];
@@ -97,7 +99,6 @@ function eliminarNoticia(id) {
     noticias = noticias.filter(noticia => noticia.id !== id);
     fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticias));
 }
-
 
 function getUsuarios(){    
  
@@ -143,6 +144,7 @@ function getVisitas(){
 
     return objVisitas;
 }
+
 function guardar(data){
 
     let str_mercaderias = fs.readFileSync('./db.txt','utf-8')
