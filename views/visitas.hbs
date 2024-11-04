@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    {{>navegacion}}
+     <h1>Visitas</h1>
+
+    <hr>
+    <pre>{{token}}</pre>
+    <!-- <img src="images/empresa.png" alt="Imágen de Empresa"> -->
+    <hr>
+
+    {{#each carga}}
+    <p>{{this.nombre}}  {{this.numtel}}   {{this.email}}      {{this.fechaVisita}} {{this.cantidadPer}}</p>
+    <script>
+        console.log({{this.email}} {{this.numtel}})
+    </script>
+
+    {{/each}}
+
+
+   
+   
+
+</body>
+</html>

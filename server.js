@@ -21,8 +21,6 @@ app.use("/", express.static(path.join(__dirname, "/public")));
 app.set("views", path.join(__dirname, "views")); // Ruta a la carpeta "views"
 
 let _url = path.join(__dirname,'./views/');
-
-
 _url = "http://localhost:"+port;
 
 var estaUrl = path.join(__dirname);
@@ -44,7 +42,11 @@ console.log("produccion")
 console.log(produccion)
 //-------------------------------------------------------
 
-//var objeto = {url : _url+"/login"};
+console.log(_url+'public/views/navegacion.hbs')
+
+const navegacion = fs.readFileSync('./views/navegacion.hbs','utf-8')
+Handlebars.registerPartial('navegacion',navegacion)/* */
+
 var objeto = {url : _url,token:""};
 let destino = {url:""}
 //------------- zona de ruteo ------------------
@@ -58,7 +60,10 @@ app.get('/', (req,res)=>{
         }
     });
     var template = Handlebars.compile(archivo);
+
     objeto.portada = Controlador.damePortada()
+    objeto.eventos = Controlador.dameEventos();
+
     var salida = template(objeto);
     res.send(salida);
 })
@@ -82,7 +87,7 @@ app.post('/login2', (req,res)=>{
     let registrado = Seguridad.registrado(req.body)
  
     if(registrado.validado){
-        console.log("server <-r- seguridad 'true'");
+        //console.log("server <-r- seguridad 'true'");
         var archivo = fs.readFileSync('./views/menu.hbs','utf-8',(err,data)=>{
             if(err){
                 console.log(err);         
@@ -266,26 +271,72 @@ app.post('/eliminarnoticia', (req, res)=>{
 
 app.post('/visitas', (req, res) => {
 
-    var archivo = fs.readFileSync('./views/index.hbs', 'utf-8', (err, data) => {
-        if (err) {
-            console.log(err);         
-        } else {
-            console.log("Formulario de visitas leído correctamente");
-        }
-    });
-
-    var template = Handlebars.compile(archivo);
-
-    const datosVisita = { nombre: req.body.nombre, email: req.body.email, telefono: req.body.numtel, fechaVisita: req.body.fechaVisita, cantidadPer: req.body.cantidadPer, guia: req.body.guia };   
-   
-    let carga = Seguridad.agregarVisita(datosVisita)
-
-    objeto.visita = carga;
-
-    var salida = template(objeto);
-    res.send(salida);
+    console.log(req.body)
+    Seguridad.agregarVisita(req.body)
 });
 
+app.post('/visitas2', (req, res)=>{
+        var archivo = fs.readFileSync('./views/visitas.hbs','utf-8',(err,data)=>{
+            if(err){
+                console.log(err);         
+            }else{
+                console.log("archivo leído");
+            }
+        });
+        var template = Handlebars.compile(archivo);
+        
+        let xcarga = Seguridad.listarVisitas(req.body)
+
+        //console.log("xcarga")
+        //console.log(xcarga)
+        objeto.carga = (xcarga)
+        var salida = template(objeto);
+        res.send(salida);  
+})
+
+app.post('/agenda', (req, res)=>{
+    console.log("browser --> server 'post/agenda'")
+    var archivo = fs.readFileSync('./views/agenda.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
+    
+    console.log("browser <-r- server 'agenda.hbs'")
+    var salida = template(objeto);
+    res.send(salida);     
+})
+
+app.post('/nuevoevento',(req, res)=>{
+    console.log("browser --> server 'post/nuevoevento'")
+    console.log("server --> seguridad 'nuevoEvento(req.body)'")
+    let carga = Seguridad.nuevoEvento(req.body)
+    console.log("server <-r- seguridad '[{Evento}]'")
+    console.log("browser <-r- server '[{Evento}]'")
+    res.send(carga)
+})
+
+app.delete('/eliminarevento', (req, res)=>{
+    console.log("browser --> server 'post/eliminarevento'")
+    console.log("server --> seguridad 'eliminarEvento\(req.body\)'")
+    let variableIntermedia = Seguridad.eliminarEvento(req.body)
+    console.log("server <-r- seguridad '[{Evento}]'")
+    console.log("browser <-r- server '[{Evento}]'")
+    res.send(variableIntermedia)
+    
+})
+
+app.post('/geteventos',(req,res)=>{
+    console.log("browser --> server 'post/geteventos'")
+    console.log("server --> controlador 'dameEventos'")
+    const colEventos = Controlador.dameEventos()
+    console.log("server <-r- controlador '[{Evento}]'")
+    console.log("browser <-r- server '[{Evento}]'")
+    res.send(colEventos)
+})
 
 app.listen(port, ()=>{
     console.log(`Escuchando en el puerto ${port}`)

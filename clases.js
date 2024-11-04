@@ -14,6 +14,16 @@ class Portada{
     }
 }
 
+class Evento{
+    constructor(descr, fech, cupo, esta ){
+        this.id = Helper.getUuid()
+        this.descripcion = descr
+        this.fecha = fech
+        this.cupo = cupo
+        this.estado = esta
+    }
+}
+
 class Noticia{
     constructor(titular, imagen, descripcion){
         this.id = Helper.getUuid()
@@ -123,6 +133,7 @@ class Visita{
             let nuevaVisita = new Visita();
             nuevaVisita.id = json.id;
             nuevaVisita.nombre = json.nombre;
+            nuevaVisita.email = json.email;
             nuevaVisita.numtel = json.numtel;
             nuevaVisita.fechaVisita = json.fechaVisita;
             nuevaVisita.cantidadPer = json.cantidadPer;
@@ -133,6 +144,7 @@ class Visita{
         }
     }   
 }
+
 class Mercaderia{
     constructor(nom, cant, imp){
         this.nombre = nom;
@@ -201,4 +213,4 @@ class Perfil {
 }
 
 
-module.exports = {Portada, Mercaderia, Usuario, Perfil, Noticia, Visita}
+module.exports = {Evento, Portada, Mercaderia, Usuario, Perfil, Noticia, Visita}
