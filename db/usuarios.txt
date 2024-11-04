@@ -1,1 +1,1 @@
-[{"nombre":"admin","contrasena":"admin","rol":"admin","class":"Usuario"},{"nombre":"Evangelina","class":"Usuario"},{"nombre":"Fede","contrasena":"1234","rol":"nada","class":"Usuario"}]
+[{"nombre":"admin","contrasena":"admin","rol":"admin","class":"Usuario"},{"nombre":"Evangelina","class":"Usuario"},{"nombre":"Diego Maradona","contrasena":"1234","rol":"admin","class":"Usuario"}]

@@ -12,7 +12,6 @@ function leerNoticias() {
     }
 }
 
-//leerNoticias()
 function validar(usu, con){
     // Levanta todos los usarios de la unidad local
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
@@ -55,8 +54,8 @@ function guardarNoticia(data){
     noticias.push(data)
     fs.writeFileSync('./db/noticias.txt',JSON.stringify(noticias))
 }
-
-function guardarVisita(data){
+// Visitas ----------------------------
+function agregarVisita(data){
     let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
     let visitas = []
     if(str_visitas){
@@ -67,6 +66,20 @@ function guardarVisita(data){
     fs.writeFileSync('./db/visitas.txt',JSON.stringify(visitas))
 }
 
+function dameVisitas(){
+    return dameColeccion("visitas.txt")
+}
+
+// Todos -----------------------------------------------
+function dameColeccion(arch){
+    let str_coleccion = fs.readFileSync('./db/'+arch, 'utf-8')
+    let coleccion = []
+    if(str_coleccion){
+        coleccion = JSON.parse(str_coleccion)
+    }
+    return coleccion
+}
+//       ---------------------------------
 function eliminarUsuario(nomUsu) {
     let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
     let usuarios = [];
@@ -131,6 +144,7 @@ function getNoticias(){
     return objNoticias;
 }
 
+// Visitas --------------------------------------------------
 function getVisitas(){
     
     let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
@@ -140,10 +154,20 @@ function getVisitas(){
         visitas = JSON.parse(str_visitas);
     }
     let objVisitas = [];
-    visitas.forEach(x=>objVisitas.push(Clases.Visita.fromJSON(x)))
+    //visitas.forEach(x=>objVisitas.push(Clases.Visita.fromJSON(x)))
 
-    return objVisitas;
+    let retorno = []
+    console.log(visitas.lenght)
+    for(let i=visitas.length-1 ; i>=0 ; i--){
+        retorno.push(Clases.Visita.fromJSON(visitas[i]))
+        //console.log(i)
+    }
+
+    //return objVisitas;
+    return retorno
 }
+
+// --------------------------------
 
 function guardar(data){
 
@@ -169,4 +193,23 @@ function obtener(){
 
 }
 
-module.exports = {leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, guardarVisita, getVisitas}
+// Eventos de Agenda ------------------------------------------------
+
+function nuevoEvento(data){
+// implementar.
+}
+
+function getEventos(){
+    // implementar.
+    const eve1 = new Clases.Evento("Visita del intendente de Lavalle",new Date(2025,0,1,12,30,0,0),45,"Invitaciones")
+    const eve2 = new Clases.Evento("Visita del intendente de Lavalle",new Date(2025,0,1,12,30,0,0),45,"Invitaciones")
+    const eve3 = new Clases.Evento("Visita del intendente de Lavalle",new Date(2025,0,1,12,30,0,0),45,"Invitaciones")
+    return [eve1, eve2, eve3]
+}
+
+function eliminarEvento(id){
+    // implementar
+}
+
+
+module.exports = {eliminarEvento, getEventos, nuevoEvento, dameVisitas, leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, agregarVisita, getVisitas}

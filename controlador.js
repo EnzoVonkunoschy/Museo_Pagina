@@ -31,7 +31,7 @@ function listarUsuarios(usuarioEnSesion,data){
 
 function agregarUsuario(usuarioEnSesion, data){
     console.log(usuarioEnSesion)
-    console.log(data)
+    //console.log(data)
     if(usuarioEnSesion.rol === "admin"){
         Modelo.guardarUsuario(new Clases.Usuario(data.nombre, data.contrasena, data.rol))
         return Modelo.getUsuarios()
@@ -69,9 +69,43 @@ function eliminarNoticia(usuarioEnSesion, data) {
         return Modelo.getNoticias()
     }
 }
-
+// Visitas -----------------------------
 function agregarVisita(data) {
-    Modelo.guardarVisita(new Clases.Visita(data.nombre, data.email, data.telefono, data.fechaVisita, data.cantidadPer, data.guia)); 
-    return Modelo.getVisitas();
+    console.log("--- controlador ---")
+    console.log(data)
+    const unaVisita = new Clases.Visita(data.nombre, data.email, data.numtel, data.fechaVisita, data.cantidadPer, data.guia)
+    Modelo.agregarVisita(unaVisita);
 }
-module.exports = {listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita}
+
+function listarVisitas(usuarioEnSesion, data){
+    if(usuarioEnSesion.rol == 'admin'){
+        return Modelo.getVisitas()
+    }
+}
+
+// Eventos (de la agenda)----------------------------------------
+
+function nuevoEvento(usuarioEnSesion, data){
+    if(usuarioEnSesion.rol == 'admin'){
+        Modelo.nuevoEvento();
+        return Modelo.getEventos()
+    }
+}
+
+function eliminarEvento(usuarioEnSesion, data){
+    if(usuarioEnSesion.rol == 'admin'){
+        console.log("controlador --> modelo 'eliminarEvento[data.id]'")
+        Modelo.eliminarEvento(data.id)
+        console.log("controlador --> modelo 'getEventos[]'")
+        let variableIntermedia = Modelo.getEventos()
+        console.log("controlador <-r- modelo '[{Evento}]'")
+        return Modelo.getEventos()
+    }
+}
+
+function dameEventos(){
+    console.log("controlador --> modelo 'getEventos\(\)'")
+    console.log("controlador <-r- modelo '[{Eventos}]'")
+    return Modelo.getEventos()
+}
+module.exports = {dameEventos, eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita}

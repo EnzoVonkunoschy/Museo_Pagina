@@ -15,8 +15,15 @@
     <img src={{portada.noticia.imagen}} alt="imagen">
     <p>{{portada.noticia.descripcion}}</p>
 
+<hr>
+<p><b>Agenda</b></p>
+{{#each eventos}}
+<p>{{this.fecha}}  {{this.descripcion}} {{this.cupo}}  {{this.estado}}</p>
+{{/each}}
+<hr>
     <h3>Formulario para Visitas</h3>
-    <form action="/visitas" method="POST">
+    <!--form action="/visitas" method="GET"-->
+    <div>
         <label for="nombre">Nombre Completo:</label><br>
         <input type="text" id="nombre" name="nombre" required><br><br>
 
@@ -38,8 +45,38 @@
             <option value="no">No</option>
         </select><br><br>
 
-        <button type="submit">Enviar</button>
-    </form>
+        <button onclick="enviar()">Enviar</button>
+    </div>
+
+    <script>
+
+        function enviar(){
+            
+            fetch('{{url}}visitas',
+                {headers: {'Content-Type':'application/json'} ,
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: document.getElementById('nombre').value,
+                    email: document.getElementById('email').value,
+                    numtel: document.getElementById('numtel').value,
+                    fechaVisita: document.getElementById('fechaVisita').value,
+                    cantidadPer: document.getElementById('cantidadPer').value,
+                    guia: document.getElementById('guia').value,
+                    })
+                }
+            )
+
+            const inputs = document.getElementsByTagName('input')
+            console.log(inputs[0])
+            for(let i=0 ; i<inputs.length ; i++){
+                inputs[i].value = ""
+            }
+
+        alert("Su pedido ha sido enviado y será contactado a la brevedad")
+                    
+        }
+
+    </script>
 
 </body>
 </html>

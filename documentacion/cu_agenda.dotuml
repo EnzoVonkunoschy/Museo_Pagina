@@ -1,0 +1,39 @@
+SequenceDiagram  [frame=true framecolor=steelblue label="cu_agenda.dotuml"] {
+
+lifeline browser
+lifeline server
+lifeline seguridad
+lifeline controlador
+lifeline modelo
+
+browser --> server 'post/agenda'
+browser <-r- server 'agenda.hbs'
+browser --> server 'post/geteventos'
+server --> controlador 'dameEventos'
+controlador --> modelo 'getEventos()'
+controlador <-r- modelo '[{Eventos}]'
+server <-r- controlador '[{Evento}]'
+browser <-r- server '[{Evento}]'
+
+note right 'Nuevo Evento'
+
+browser --> server 'post/nuevoevento'
+server --> seguridad 'nuevoEvento(req.body)'
+seguridad --> controlador 'nuevoEvento(usuarioEnSesion, data)'
+seguridad <-r- controlador '[{Evento}]'
+server <-r- seguridad '[{Evento}]'
+browser <-r- server '[{Evento}]'
+
+note right 'Eliminar Evento'
+
+browser --> server 'post/eliminarevento'
+server --> seguridad 'eliminarEvento(req.body)'
+seguridad --> controlador 'eliminarEvento(usuarioEnSesion, data)'
+controlador --> modelo 'eliminarEvento[data.id]'
+controlador --> modelo 'getEventos[]'
+controlador <-r- modelo '[{Evento}]'
+seguridad <-r- controlador '[{Evento}]'
+server <-r- seguridad '[{Evento}]'
+browser <-r- server '[{Evento}]'
+
+}
