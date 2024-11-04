@@ -87,8 +87,12 @@ function listarVisitas(usuarioEnSesion, data){
 
 function nuevoEvento(usuarioEnSesion, data){
     if(usuarioEnSesion.rol == 'admin'){
+        console.log("controlador --> modelo 'nuevoEvento[ ]'")
         Modelo.nuevoEvento();
-        return Modelo.getEventos()
+        console.log("controlador --> modelo 'getEventos[ ]'")
+        let variableIntermedia = Modelo.getEventos()
+        console.log("controlador <-r- modelo '[{Evento}]'")
+        return variableIntermedia
     }
 }
 

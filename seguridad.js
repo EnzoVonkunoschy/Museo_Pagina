@@ -100,8 +100,9 @@ function listarVisitas(data){
 function nuevoEvento(data){
     const usuarioEnSesion = dameUsuario(data.token)
     console.log("seguridad --> controlador 'nuevoEvento(usuarioEnSesion, data)'")
+    let variableIntermedia = Controlador.nuevoEvento(usuarioEnSesion, data)
     console.log("seguridad <-r- controlador '[{Evento}]'")
-    return Controlador.nuevoEvento(usuarioEnSesion, data)
+    return variableIntermedia
 }
 
 function eliminarEvento(data){ 
