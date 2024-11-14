@@ -71,6 +71,53 @@ class Noticia{
     }    
 }
 
+class Donacion {
+    constructor(nombreDonador, telefono, objetoDonado, fecha){
+        this.id = Helper.getUuid()
+        this.nombreDonador = nombreDonador;
+        this.telefono = telefono;
+        this.objetoDonado = objetoDonado;
+        this.fecha = fecha;
+    }
+    getNombreDonador(){
+        return this.nombreDonador;
+    }
+    getTelefono(){
+        return this.telefono;
+    }
+    getNombreObjeto(){
+        return this.objetoDonado;
+    }
+    getFecha(){
+        return this.fecha;
+    }
+    setNombreDonador(nomD){
+        this.nombreDonador = nomD;
+    }
+    setTelefono(telef){
+        this.telefono = telef;
+    }
+    setNombreObjeto(obj){
+        this.objetoDonado = obj
+    }
+    setFecha(fech){
+        this.fecha = fech;
+    }
+    static fromJSON(json) {
+        if (json.class == "Donacion") {
+            let nuevaDonacion = new Donacion();
+            nuevaDonacion.id = json.id;
+            nuevaDonacion.nombreDonador = json.nombreDonador;
+            nuevaDonacion.telefono = json.telefono;
+            nuevaDonacion.objetoDonado = json.objetoDonado;
+            nuevaDonacion.fecha = json.fecha;
+            nuevaDonacion.class = json.class;
+    
+            return nuevaDonacion;  
+        }
+    }  
+}
+
 
 class Visita{
     constructor(nombre, email, numtel, fechaVisita, cantidadPer, guia){
@@ -142,7 +189,7 @@ class Visita{
     
             return nuevaVisita;  
         }
-    }   
+    }  
 }
 
 class Mercaderia{
@@ -213,4 +260,4 @@ class Perfil {
 }
 
 
-module.exports = {Evento, Portada, Mercaderia, Usuario, Perfil, Noticia, Visita}
+module.exports = {Evento, Portada, Mercaderia, Usuario, Perfil, Noticia, Visita, Donacion}
