@@ -15,13 +15,20 @@
     <pre>{{url}}</pre> --}}
 
     <h1>Museo Histórico y Natural de Lavalle</h1>
-    {{!-- <pre>{{portada.noticia.titular}}</pre> --}}
+    <pre>{{portada.noticia.titular}}</pre> 
 
     <img src={{portada.noticia.imagen}} alt="imagen">
-    {{!-- <p>{{portada.noticia.descripcion}}</p> --}}
+    <p>{{portada.noticia.descripcion}}</p>
 
+    <hr>
+    <p><b>Agenda</b></p>
+    {{#each eventos}}
+    <p>{{this.fecha}}  {{this.descripcion}} {{this.cupo}}  {{this.estado}}</p>
+    {{/each}}
+    <hr>
+    
     <h3>Formulario para Visitas</h3><br>
-    <form action="/visitas" method="POST" class="formVis">
+    
     <div class="field-group">
         <label for="nombre">Nombre Completo:</label>
         <input type="text" id="nombre" name="nombre" required>
@@ -56,9 +63,38 @@
     </div>
 
     <div class="button-group">
-        <button type="submit">Enviar</button>
+        <button onclick="enviar()">Enviar</button>
     </div>
-</form>
+
+    <script>
+
+        function enviar(){
+            
+            fetch('{{url}}visitas',
+                {headers: {'Content-Type':'application/json'} ,
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: document.getElementById('nombre').value,
+                    email: document.getElementById('email').value,
+                    numtel: document.getElementById('numtel').value,
+                    fechaVisita: document.getElementById('fechaVisita').value,
+                    cantidadPer: document.getElementById('cantidadPer').value,
+                    guia: document.getElementById('guia').value,
+                    })
+                }
+            )
+
+            const inputs = document.getElementsByTagName('input')
+            console.log(inputs[0])
+            for(let i=0 ; i<inputs.length ; i++){
+                inputs[i].value = ""
+            }
+
+        alert("Su pedido ha sido enviado y será contactado a la brevedad")
+                    
+        }
+
+    </script>
 
 
 </body>

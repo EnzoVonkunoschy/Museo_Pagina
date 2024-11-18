@@ -10,14 +10,8 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Mi Empresa</h1>
-    <nav>
-        <form action="{{url}}usuarios" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Usuarios"> </form>  
-        <form action="{{url}}noticias" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Noticias"> </form>  
-        <form action="{{url}}agendas" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Agenda"> </form>  
-        <form action="{{url}}donaciones" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Donaciones"> </form>  
-        <form action="{{url}}login2" method="POST"><input name="token" type="hidden" value="{{token}}"><input type="submit" value="Volver"> </form>  
-     </nav>
+    
+     {{>navegacion}}
     <hr>
     <pre>{{token}}</pre>
     <img src="images/museo.jpeg" alt="Imágen de Empresa">

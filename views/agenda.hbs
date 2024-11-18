@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+     {{>navegacion}}
+     <h3>Agenda</h3>
+    <hr>
+    <pre>{{token}}</pre>
+    <!--img src="images/empresa.png" alt="Imágen de Empresa"-->
+    <hr>
+    <div class="form">
+        <input type="hidden" name='token' value="{{token}}">
+        <p><label>Descripción:</label><input type="text" id="descripcion" ></p>
+        <p><label>Fecha:      </label><input type="date" id="fecha" ></p>
+        <p><label>Cupo:       </label><input type="number" id="cupo" ></p>
+        <p><label>Estado:     </label><input type="text" id="estado" ></p>
+
+        <button onclick="procesarEvento()">Agregar Evento</button>
+    </div>
+    <div id="listadoEventos"></div>
+
+    <script>
+        function procesarEvento(){
+            //alert('procesando evento')
+            let descripcion = document.getElementById('descripcion').value;
+            let fecha= document.getElementById('fecha').value;
+            let cupo= document.getElementById('cupo').value;
+            let estado= document.getElementById('estado').value;
+            /* */
+            fetch('{{url}}nuevoevento',
+                {headers: {'Content-Type':'application/json'} ,
+                method: 'POST',
+                body: JSON.stringify({descripcion: descripcion, fecha: fecha, cupo: cupo, estado: estado, token: '{{token}}'})
+                }
+            ).then(data=>data.json())
+            .then(data=>listarEventos(data));
+        }
+
+        async function getEventos(){
+            return fetch('{{url}}geteventos',
+                {headers: {'Content-Type':'application/json'} ,
+                method: 'POST',
+                body: JSON.stringify({descripcion: descripcion, fecha: fecha, cupo: cupo, estado: estado, token: '{{token}}'})
+                }
+            ).then(data=>data.json())            
+        }
+
+        getEventos().then(data=>listarEventos(data))
+
+
+        function listarEventos(data){
+            console.log(data);
+            let str = ""
+            for(var i=0 ; i<data.length ; i++){
+                str += `<p>${data[i].descripcion}  ${data[i].fecha} ${data[i].cupo} ${data[i].estado} <button onclick="eliminarEvento('${data[i].id}')">Eliminar</button>`
+            }
+            document.getElementById('listadoEventos').innerHTML = str;
+        }
+
+        function eliminarEvento(data){
+            let opc = prompt("Usted va a eliminar un evento. \n 1 - Continuar \n 2 - Cancelar ")
+            console.log(opc)
+            if(1 == opc){
+                fetch('{{url}}eliminarevento',
+                    {headers: {'Content-Type':'application/json'} ,
+                    method: 'DELETE',
+                    body: JSON.stringify({id : data, token: '{{token}}'})
+                    }
+                ).then(data=>data.json())
+                .then(data=>listarEventos(data))
+            }
+        }
+    </script>
+
+</body>
+</html>
