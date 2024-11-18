@@ -87,26 +87,7 @@ function dameDonaciones(){
     return dameColeccion("donaciones.txt")
 }
 
-function getDonaciones(){
-    
-    let str_donaciones = fs.readFileSync('./db/donaciones.txt','utf-8')
-    let donaciones = []
-    console.log(donaciones);
-    if(str_donaciones){ 
-        donaciones = JSON.parse(str_donaciones);
-    }
-    return donaciones
-    // let objDonaciones = [];
-    // //donaciones.forEach(x=>objDonaciones.push(Clases.Visita.fromJSON(x)))
 
-    // // console.log(donaciones.length)
-    // for(let i=donaciones.length-1 ; i>=0 ; i--){
-    //     let donacion = Clases.Donacion.fromJSON(donaciones[i])
-    //     if (donacion) objDonaciones,push(donacion)//console.log(i)
-    // }
-
-    // return objDonaciones
-}
 
 // Todos -----------------------------------------------
 function dameColeccion(arch){
@@ -250,4 +231,4 @@ function eliminarEvento(id){
 }
 
 
-module.exports = {eliminarEvento, getEventos, nuevoEvento, dameVisitas, leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, agregarVisita, getVisitas, getDonaciones, dameDonaciones, agregarDonacion}
+module.exports = {eliminarEvento, getEventos, nuevoEvento, dameVisitas, leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, agregarVisita, getVisitas, dameDonaciones, agregarDonacion}

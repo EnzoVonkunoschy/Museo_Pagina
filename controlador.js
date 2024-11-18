@@ -92,7 +92,8 @@ function agregarDonacion(data) {
 
 function listarDonacion(usuarioEnSesion, data){
     if(usuarioEnSesion.rol == 'admin'){
-        return Modelo.getDonaciones()
+       
+        return Modelo.dameDonaciones()
     }
 }
 
