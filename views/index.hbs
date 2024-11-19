@@ -65,6 +65,20 @@
     <div class="button-group">
         <button onclick="enviar()">Enviar</button>
     </div>
+    <h3>Formulario para Donaciones</h3>
+    <!--form action="/donaciones" method="GET"-->
+    <div>
+        <label for="nombreDonador">Nombre Completo:</label><br>
+        <input type="text" id="nombreDonador" name="nombreDonador" required><br><br>
+
+        <label for="telefono">Telefono:</label><br>
+        <input type="text" id="telefono" name="telefono" required><br><br>
+
+        <label for="objetoDonado">Objeto a Donar:</label><br>
+        <input type="text" id="objetoDonado" name="objetoDonado" required><br><br>
+
+        <button onclick="enviarDonacion()">Enviar</button>
+    </div>
 
     <script>
 
@@ -91,6 +105,29 @@
             }
 
         alert("Su pedido ha sido enviado y será contactado a la brevedad")
+                    
+        }
+        function enviarDonacion(){
+            
+            fetch('{{url}}donaciones',
+                {headers: {'Content-Type':'application/json'} ,
+                method: 'POST',
+                body: JSON.stringify({
+                    nombreDonador: document.getElementById('nombreDonador').value,
+                    telefono: document.getElementById('telefono').value,
+                    objetoDonado: document.getElementById('objetoDonado').value,
+                    fecha: new Date().toISOString().split('T')[0],  // Obtiene la fecha actual en formato "YYYY-MM-DD"
+                    })
+                }
+            )
+
+            const inputs = document.getElementsByTagName('input')
+            console.log(inputs[0])
+            for(let i=0 ; i<inputs.length ; i++){
+                inputs[i].value = ""
+            }
+
+        alert("¡Gracias por su donación! Será contactado a la brevedad")
                     
         }
 

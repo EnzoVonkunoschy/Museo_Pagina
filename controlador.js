@@ -82,6 +82,20 @@ function listarVisitas(usuarioEnSesion, data){
         return Modelo.getVisitas()
     }
 }
+// Donaciones -----------------------------
+function agregarDonacion(data) { 
+    console.log("--- controlador ---")
+    console.log(data)
+    const unaDonacion = new Clases.Donacion(data.nombreDonador, data.telefono, data.objetoDonado, data.fecha)
+    Modelo.agregarDonacion(unaDonacion);
+}
+
+function listarDonacion(usuarioEnSesion, data){
+    if(usuarioEnSesion.rol == 'admin'){
+       
+        return Modelo.dameDonaciones()
+    }
+}
 
 // Eventos (de la agenda)----------------------------------------
 
@@ -112,4 +126,4 @@ function dameEventos(){
     console.log("controlador <-r- modelo '[{Eventos}]'")
     return Modelo.getEventos()
 }
-module.exports = {dameEventos, eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita}
+module.exports = {dameEventos, eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita, agregarDonacion, listarDonacion}

@@ -70,6 +70,25 @@ function dameVisitas(){
     return dameColeccion("visitas.txt")
 }
 
+
+// Donaciones ----------------------------
+function agregarDonacion(data){
+    let str_donaciones = fs.readFileSync('./db/donaciones.txt','utf-8')
+    let donaciones = []
+    if(str_donaciones){
+        donaciones = JSON.parse(str_donaciones)
+    }
+    
+    donaciones.push(data)
+    fs.writeFileSync('./db/donaciones.txt',JSON.stringify(donaciones))
+}
+
+function dameDonaciones(){
+    return dameColeccion("donaciones.txt")
+}
+
+
+
 // Todos -----------------------------------------------
 function dameColeccion(arch){
     let str_coleccion = fs.readFileSync('./db/'+arch, 'utf-8')
@@ -212,4 +231,4 @@ function eliminarEvento(id){
 }
 
 
-module.exports = {eliminarEvento, getEventos, nuevoEvento, dameVisitas, leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, agregarVisita, getVisitas}
+module.exports = {eliminarEvento, getEventos, nuevoEvento, dameVisitas, leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, agregarVisita, getVisitas, dameDonaciones, agregarDonacion}
