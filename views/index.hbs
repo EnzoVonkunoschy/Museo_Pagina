@@ -4,48 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
     {{!--
     <pre>{{url}}</pre> --}}
 
     <h1>Museo Histórico y Natural de Lavalle</h1>
-    <pre>{{portada.noticia.titular}}</pre>
+    <pre>{{portada.noticia.titular}}</pre> 
 
     <img src={{portada.noticia.imagen}} alt="imagen">
     <p>{{portada.noticia.descripcion}}</p>
 
-<hr>
-<p><b>Agenda</b></p>
-{{#each eventos}}
-<p>{{this.fecha}}  {{this.descripcion}} {{this.cupo}}  {{this.estado}}</p>
-{{/each}}
-<hr>
-    <h3>Formulario para Visitas</h3>
-    <!--form action="/visitas" method="GET"-->
-    <div>
-        <label for="nombre">Nombre Completo:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br><br>
+    <hr>
+    <p><b>Agenda</b></p>
+    {{#each eventos}}
+    <p>{{this.fecha}}  {{this.descripcion}} {{this.cupo}}  {{this.estado}}</p>
+    {{/each}}
+    <hr>
+    
+    <h3>Formulario para Visitas</h3><br>
+    
+    <div class="field-group">
+        <label for="nombre">Nombre Completo:</label>
+        <input type="text" id="nombre" name="nombre" required>
+    </div>
 
-        <label for="email">Correo Electrónico:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+    <div class="field-group">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
 
-        <label for="numCelu">Teléfono de contacto:</label><br>
-        <input type="text" id="numtel" name="numtel" required><br><br>
+    <div class="field-group">
+        <label for="numCelu">Teléfono de contacto:</label>
+        <input type="text" id="numtel" name="numtel" required>
+    </div>
 
-        <label for="fechaVisita">Fecha de Visita:</label><br>
-        <input type="date" id="fechaVisita" name="fechaVisita" required><br><br>
+    <div class="field-group">
+        <label for="fechaVisita">Fecha de Visita:</label>
+        <input type="date" id="fechaVisita" name="fechaVisita" required>
+    </div>
 
-        <label for="cantidadPer">Cantidad de Personas:</label><br>
-        <input type="number" id="cantidadPer" name="cantidadPer" min="1" required><br><br>
+    <div class="field-group">
+        <label for="cantidadPer">Cantidad de Personas:</label>
+        <input type="number" id="cantidadPer" name="cantidadPer" min="1" required>
+    </div>
 
-        <label for="guia">¿Requiere Guía?</label><br>
+    <div class="field-group">
+        <label for="guia">¿Requiere Guía?</label>
         <select id="guia" name="guia" required>
             <option value="si">Sí</option>
             <option value="no">No</option>
-        </select><br><br>
+        </select>
+    </div>
 
+    <div class="button-group">
         <button onclick="enviar()">Enviar</button>
+    </div>
+    <h3>Formulario para Donaciones</h3>
+    <!--form action="/donaciones" method="GET"-->
+    <div>
+        <label for="nombreDonador">Nombre Completo:</label><br>
+        <input type="text" id="nombreDonador" name="nombreDonador" required><br><br>
+
+        <label for="telefono">Telefono:</label><br>
+        <input type="text" id="telefono" name="telefono" required><br><br>
+
+        <label for="objetoDonado">Objeto a Donar:</label><br>
+        <input type="text" id="objetoDonado" name="objetoDonado" required><br><br>
+
+        <button onclick="enviarDonacion()">Enviar</button>
     </div>
 
     <script>
@@ -75,8 +107,32 @@
         alert("Su pedido ha sido enviado y será contactado a la brevedad")
                     
         }
+        function enviarDonacion(){
+            
+            fetch('{{url}}donaciones',
+                {headers: {'Content-Type':'application/json'} ,
+                method: 'POST',
+                body: JSON.stringify({
+                    nombreDonador: document.getElementById('nombreDonador').value,
+                    telefono: document.getElementById('telefono').value,
+                    objetoDonado: document.getElementById('objetoDonado').value,
+                    fecha: new Date().toISOString().split('T')[0],  // Obtiene la fecha actual en formato "YYYY-MM-DD"
+                    })
+                }
+            )
+
+            const inputs = document.getElementsByTagName('input')
+            console.log(inputs[0])
+            for(let i=0 ; i<inputs.length ; i++){
+                inputs[i].value = ""
+            }
+
+        alert("¡Gracias por su donación! Será contactado a la brevedad")
+                    
+        }
 
     </script>
+
 
 </body>
 </html>

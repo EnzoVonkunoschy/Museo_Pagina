@@ -97,6 +97,17 @@ function listarVisitas(data){
     return Controlador.listarVisitas(usuarioEnSesion, data)
 }
 
+function agregarDonacion(data){
+    console.log("--- seguridad ---")
+    console.log(data)
+    Controlador.agregarDonacion(data)
+}
+
+function listarDonacion(data){
+    const usuarioEnSesion = dameUsuario(data.token)
+    return Controlador.listarDonacion(usuarioEnSesion, data)
+}
+
 function nuevoEvento(data){
     const usuarioEnSesion = dameUsuario(data.token)
     console.log("seguridad --> controlador 'nuevoEvento(usuarioEnSesion, data)'")
@@ -113,4 +124,4 @@ function eliminarEvento(data){
     return variableIntermedia
 }
 
-module.exports = {eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, eliminarNoticia, agregarUsuario, registrado, listarUsuarios, dameUsuario, agregarVisita};
+module.exports = {eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, eliminarNoticia, agregarUsuario, registrado, listarUsuarios, dameUsuario, agregarVisita, agregarDonacion, listarDonacion};

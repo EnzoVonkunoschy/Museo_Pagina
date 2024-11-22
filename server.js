@@ -294,6 +294,34 @@ app.post('/visitas2', (req, res)=>{
         res.send(salida);  
 })
 
+app.post('/donaciones', (req, res) => {
+
+    console.log(req.body)
+    Seguridad.agregarDonacion(req.body)
+});
+
+app.post('/donaciones2', (req, res)=>{
+    var archivo = fs.readFileSync('./views/donaciones.hbs','utf-8',(err,data)=>{
+        if(err){
+            console.log(err);         
+        }else{
+            console.log("archivo leído");
+        }
+    });
+    var template = Handlebars.compile(archivo);
+    
+    let xcarga = Seguridad.listarDonacion(req.body)
+
+    //console.log("xcarga")
+    //console.log(xcarga)
+    objeto.carga = (xcarga)
+    var salida = template(objeto);
+    res.send(salida);  
+
+    console.log(xcarga)
+})
+
+
 app.post('/agenda', (req, res)=>{
     console.log("browser --> server 'post/agenda'")
     var archivo = fs.readFileSync('./views/agenda.hbs','utf-8',(err,data)=>{
