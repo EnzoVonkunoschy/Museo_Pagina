@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
    
@@ -15,17 +19,29 @@
     <!-- <img src="images/empresa.png" alt="Imágen de Empresa"> -->
     <hr>
 
-    {{#each carga}}
-    <p>{{this.nombreDonador}}  {{this.telefono}}   {{this.objetoDonado}}  {{this.fecha}} </p>
-    <script>
-        console.log({{this.fecha}} {{this.telefono}})
-    </script>
+    <table>
+        <thead>
+           <tr>
+              <th>Nombre del donador</th>
+              <th>Teléfono</th>
+              <th>Objeto donado</th>
+              <th>Fecha</th>
+           </tr> 
+        </thead>
+        <tbody>
+            {{#each carga}}
+            <tr>
+                <td>{{this.nombreDonador}}</td>
+                <td>{{this.telefono}}</td>
+                <td>{{this.objetoDonado}}</td>
+                <td>{{this.fecha}}</td>
+            </tr>
+            <script>
+              console.log({{this.fecha}} {{this.telefono}})
+            </script>
 
-    {{/each}}
-
-
-   
-   
-
+            {{/each}}
+        </tbody>
+    </table>
 </body>
 </html>

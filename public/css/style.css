@@ -187,3 +187,28 @@
         font-weight: bold;
         }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            
+        }
+
+        th {
+            background-color: var(--azul);
+            color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        tr:hover {
+            background-color: #ddd;
+        }
