@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
    
@@ -15,17 +19,31 @@
     <!-- <img src="images/empresa.png" alt="Imágen de Empresa"> -->
     <hr>
 
-    {{#each carga}}
-    <p>{{this.nombre}}  {{this.numtel}}   {{this.email}}      {{this.fechaVisita}} {{this.cantidadPer}}</p>
-    <script>
-        console.log({{this.email}} {{this.numtel}})
-    </script>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Fecha de visita</th>
+                <th>Cantidad de personas</th>
+            </tr>
+        </thead>
+        <tbody>
+           {{#each carga}}
+           <tr>
+            <td>{{this.nombre}}</td>
+            <td>{{this.numtel}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.fechaVisita}}</td>
+            <td>{{this.cantidadPer}}</td>
+           </tr> 
+           <script>
+             console.log({{this.email}} {{this.numtel}})
+           </script>
 
-    {{/each}}
-
-
-   
-   
-
+           {{/each}}
+        </tbody>
+    </table>
 </body>
 </html>
