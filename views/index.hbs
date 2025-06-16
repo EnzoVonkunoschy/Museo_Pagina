@@ -15,10 +15,13 @@
     <pre>{{url}}</pre> --}}
 
     <h1>Museo Histórico y Natural de Lavalle</h1>
-    <pre>{{portada.noticia.titular}}</pre> 
-
-    <img src={{portada.noticia.imagen}} alt="imagen">
-    <p>{{portada.noticia.descripcion}}</p>
+    <p><b>Noticias</b></p><hr>
+    {{#each carga}}
+    <h4>{{this.titular}}</h4>
+    <img src="/images/{{this.imagen}}" alt="imagen" style="width: 500px;">
+    <p>{{this.descripcion}}</p>
+    <hr>
+    {{/each}}
 
     <hr>
     <p><b>Agenda</b></p>
