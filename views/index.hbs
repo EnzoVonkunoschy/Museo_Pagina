@@ -15,10 +15,27 @@
     <pre>{{url}}</pre> --}}
 
     <h1>Museo Histórico y Natural de Lavalle</h1>
-    <pre>{{portada.noticia.titular}}</pre> 
-
-    <img src={{portada.noticia.imagen}} alt="imagen">
-    <p>{{portada.noticia.descripcion}}</p>
+    
+    <div class="noticias-section">
+        <h2>Últimas Noticias</h2>
+        <hr>
+        
+        {{#if portada.length}} {{! Verifica si el array de noticias tiene elementos }}
+            {{#each portada}} {{! Itera sobre cada noticia en el array 'portada' }}
+                <div class="noticia-item">
+                    <h3>{{this.titulo}}</h3> {{! Usa 'titulo' para el titular }}
+                    <p>{{this.descripcion}}</p>
+                    {{#if this.urlImagen}} {{! Verifica si hay una URL de imagen }}
+                        <img src="{{this.urlImagen}}" alt="{{this.titulo}}" style="max-width: 100%; height: auto; display: block; margin-top: 10px;"> {{! Usa 'urlImagen' }}
+                    {{/if}}
+                   {{! <small>Publicado: {{this.fechaCreacion}}</small>
+                </div>
+                <hr>
+            {{/each}}
+        {{else}}
+            <p>No hay noticias disponibles en este momento.</p>
+        {{/if}}
+    </div>
 
     <hr>
     <p><b>Agenda</b></p>

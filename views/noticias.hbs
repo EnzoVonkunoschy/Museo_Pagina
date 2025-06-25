@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Noticias del Museo</title> <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
@@ -16,26 +15,23 @@
 <hr>
 
 {{#each carga}}
- 
-    <h2>{{this.titular}}</h2>
+    {{!-- Aquí usamos 'titulo' y 'urlImagen' --}}
+    <h2>{{this.titulo}}</h2>
     <p>{{this.descripcion}}</p>
-    <img src="/images/{{this.imagen}}" alt="imagen" style="width: 300px;">
+    <img src="{{this.urlImagen}}" alt="imagen de noticia" style="width: 300px;">
     <form action="{{../url}}eliminarnoticia" method="POST">
       <input type="hidden" name="token" value="{{../token}}">
       <input type="hidden" name="id" value="{{this.id}}">
       <input type="submit" value="Eliminar">
     </form>
-
 {{/each}}
 
 <hr>
 <div class="agregNoticia">    
     <label>Agregar Noticia:</label>
    <form action="{{url}}agregarnoticia" method="POST" enctype="multipart/form-data">
-    <p><label>Titular:</label><input type="text" name="titular"></p>
-    <p><label>Descripción:</label><textarea name="descripcion"></textarea></p>
-    <fieldset><legend>Imagen</legend><input type="file" name="imagen"></fieldset> 
-    <input type="hidden" name="token" value="{{token}}">
+    <p><label>Título:</label><input type="text" name="titulo"></p> <p><label>Descripción:</label><textarea name="descripcion"></textarea></p>
+    <fieldset><legend>Imagen</legend><input type="file" name="imagen"></fieldset> <input type="hidden" name="token" value="{{token}}">
     <input type="submit" value="Agregar Noticia">
    </form>
 </div>

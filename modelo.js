@@ -1,234 +1,199 @@
-const fs = require('fs')
-const Clases = require('./clases.js')
+const fs = require('fs');
+const path = require('path'); // Necesario para path.basename
+const Clases = require('./clases.js');
 
-function leerNoticias() {
+// Asegurarse de que la carpeta db existe
+const DB_DIR = './db';
+if (!fs.existsSync(DB_DIR)) {
+    fs.mkdirSync(DB_DIR);
+}
+// Asegurarse de que los archivos de base de datos existen
+const files = ['noticias.txt', 'usuarios.txt', 'visitas.txt', 'donaciones.txt', 'eventos.txt'];
+files.forEach(file => {
+    const filePath = path.join(DB_DIR, file);
+    if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, '[]', 'utf-8'); // Crea el archivo con un array JSON vacío
+    }
+});
+
+// Helper para leer colecciones (útil, pero sin fromJSON)
+function leerColeccionGenerica(filename) {
     try {
-        const contenido = fs.readFileSync('./db/noticias.txt', 'utf-8');
-        const noticias = JSON.parse(contenido); // Parseamos el contenido como un array de objetos
-        return noticias;
+        const filePath = path.join(__dirname, DB_DIR, filename);
+        const contenido = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(contenido);
     } catch (error) {
-        console.error('Error al leer el archivo:', error.message);
+        console.error(`Error al leer el archivo ${filename}:`, error.message);
         return [];
     }
 }
 
-function validar(usu, con){
-    // Levanta todos los usarios de la unidad local
-    let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
-    let usuarios = JSON.parse(str_usuarios);
-    // filtra por usuario y contraseña
+// Helper para escribir colecciones
+function escribirColeccionGenerica(filename, data) {
+    const filePath = path.join(__dirname, DB_DIR, filename);
+    fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
+}
 
+
+// --- Usuarios ---
+function validar(usu, con){
+    let usuarios = leerColeccionGenerica('usuarios.txt');
     for (let i = 0; i < usuarios.length; i++) {
         if (usuarios[i].nombre === usu && usuarios[i].contrasena === con) {
-        // Si hay una coincidencia, devolver true
             return true;
         }
     }
-    // sinó devuelve false
     return false;
-    //return null
 }
 
 function guardarUsuario(data){
-    let str_usuarios = fs.readFileSync('./db/usuarios.txt','utf-8')
-    let usuarios = []
-    if(str_usuarios){
-        usuarios = JSON.parse(str_usuarios)
+    let usuarios = leerColeccionGenerica('usuarios.txt');
+    let filUsu = usuarios.filter(x => x.nombre === data.nombre);
+    if (filUsu.length === 0) {
+        usuarios.push(data);
     }
-    // No agrega usuarios con el mismo nombre
-    let filUsu = usuarios.filter(x=>x.nombre == data.nombre)
-    if(filUsu.length == 0){
-        usuarios.push(data)
-    }
-    
-    fs.writeFileSync('./db/usuarios.txt',JSON.stringify(usuarios))
+    escribirColeccionGenerica('usuarios.txt', usuarios);
 }
 
-function guardarNoticia(data){
-    let str_noticias = fs.readFileSync('./db/noticias.txt','utf-8')
-    let noticias = []
-    if(str_noticias){
-        noticias = JSON.parse(str_noticias)
-    }
-    
-    noticias.push(data)
-    fs.writeFileSync('./db/noticias.txt',JSON.stringify(noticias))
-}
-// Visitas ----------------------------
-function agregarVisita(data){
-    let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
-    let visitas = []
-    if(str_visitas){
-        visitas = JSON.parse(str_visitas)
-    }
-    
-    visitas.push(data)
-    fs.writeFileSync('./db/visitas.txt',JSON.stringify(visitas))
-}
-
-function dameVisitas(){
-    return dameColeccion("visitas.txt")
-}
-
-
-// Donaciones ----------------------------
-function agregarDonacion(data){
-    let str_donaciones = fs.readFileSync('./db/donaciones.txt','utf-8')
-    let donaciones = []
-    if(str_donaciones){
-        donaciones = JSON.parse(str_donaciones)
-    }
-    
-    donaciones.push(data)
-    fs.writeFileSync('./db/donaciones.txt',JSON.stringify(donaciones))
-}
-
-function dameDonaciones(){
-    return dameColeccion("donaciones.txt")
-}
-
-
-
-// Todos -----------------------------------------------
-function dameColeccion(arch){
-    let str_coleccion = fs.readFileSync('./db/'+arch, 'utf-8')
-    let coleccion = []
-    if(str_coleccion){
-        coleccion = JSON.parse(str_coleccion)
-    }
-    return coleccion
-}
-//       ---------------------------------
 function eliminarUsuario(nomUsu) {
-    let str_usuarios = fs.readFileSync('./db/usuarios.txt', 'utf-8');
-    let usuarios = [];
-    if (str_usuarios) {
-        usuarios = JSON.parse(str_usuarios);
-    }
-
-    // Filtrar los usuarios para eliminar el que tiene el nombre especificado
+    let usuarios = leerColeccionGenerica('usuarios.txt');
     usuarios = usuarios.filter(usuario => usuario.nombre !== nomUsu);
+    escribirColeccionGenerica('usuarios.txt', usuarios);
+}
 
-    fs.writeFileSync('./db/usuarios.txt', JSON.stringify(usuarios));
+function getUsuarios(){    
+    let usuarios = leerColeccionGenerica('usuarios.txt');
+    // Si necesitas que sean instancias de Clases.Usuario:
+    // return usuarios.map(x => Clases.Usuario.fromJSON(x));
+    return usuarios; // Si solo necesitas las propiedades planas
+}
+
+
+// --- Noticias ---
+function guardarNoticia(data){
+    let noticias = leerColeccionGenerica('noticias.txt');
+    noticias.push(data); // `data` ya es una instancia de Clases.Noticia
+    escribirColeccionGenerica('noticias.txt', noticias);
 }
 
 function eliminarNoticia(id) {
-    let str_noticias = fs.readFileSync('./db/noticias.txt', 'utf-8');
-    let noticias = [];
-    if (str_noticias) {
-        noticias = JSON.parse(str_noticias);
-    }
-    
+    let noticias = leerColeccionGenerica('noticias.txt');
     let noticiaAEliminar = noticias.find(x => x.id === id);
-    if (noticiaAEliminar) {
+
+    if (noticiaAEliminar && noticiaAEliminar.urlImagen) { // Asegurarse de que tiene urlImagen
+        // Extraer el nombre del archivo de la URL (ej. /images/timestamp-foto.jpg -> timestamp-foto.jpg)
+        const filename = path.basename(noticiaAEliminar.urlImagen);
+        const imagePath = path.join(__dirname, '../public/images', filename); // Ruta física
+
         try {
-            fs.unlinkSync('./public/images/' + noticiaAEliminar.imagen);
+            if (fs.existsSync(imagePath)) { // Verificar si el archivo existe antes de borrar
+                fs.unlinkSync(imagePath);
+                console.log(`Imagen ${filename} eliminada.`);
+            } else {
+                console.warn(`La imagen ${filename} no existe en ${imagePath}, no se pudo eliminar.`);
+            }
         } catch (err) {
             console.error('Error al borrar el archivo de imagen:', err);
         }
     }
 
     noticias = noticias.filter(noticia => noticia.id !== id);
-    fs.writeFileSync('./db/noticias.txt', JSON.stringify(noticias));
-}
-
-function getUsuarios(){    
- 
-    let str_usuarios = fs.readFileSync('./db/usuarios.txt','utf-8')
-    let usuarios = []
-    if(str_usuarios){ 
-        usuarios = JSON.parse(str_usuarios);
-    }
-    /* 
-    let objUsuarios = [];
-    usuarios.forEach(x=>objUsuarios.push(Clases.Usuario.fromJSON(x)))
-
-    return objUsuarios;*/
-
-    return usuarios
-
+    escribirColeccionGenerica('noticias.txt', noticias);
 }
 
 function getNoticias(){
-    
-    let str_noticias = fs.readFileSync('./db/noticias.txt','utf-8')
-    let noticias = []
-    console.log(noticias);
-    if(str_noticias){ 
-        noticias = JSON.parse(str_noticias);
-    }
-    let objNoticias = [];
-    noticias.forEach(x=>objNoticias.push(Clases.Noticia.fromJSON(x)))
+  let noticias = leerColeccionGenerica('noticias.txt');
+    console.log("3. modelo.js getNoticias: Contenido raw de noticias.txt:", noticias); // Ya lo tienes, déjalo.
 
-    return objNoticias;
+    let noticiasMapeadas = noticias.map(x => Clases.Noticia.fromJSON(x));
+    console.log("4. modelo.js getNoticias: Noticias después de fromJSON (listas para devolver):", noticiasMapeadas); // <--- AGREGAR ESTA LÍNEA
+
+    return noticiasMapeadas;
 }
 
-// Visitas --------------------------------------------------
+
+// --- Visitas ---
+function agregarVisita(data){
+    let visitas = leerColeccionGenerica('visitas.txt');
+    visitas.push(data); // `data` ya es una instancia de Clases.Visita
+    escribirColeccionGenerica('visitas.txt', visitas);
+}
+
 function getVisitas(){
-    
-    let str_visitas = fs.readFileSync('./db/visitas.txt','utf-8')
-    let visitas = []
-    console.log(visitas);
-    if(str_visitas){ 
-        visitas = JSON.parse(str_visitas);
-    }
-    let objVisitas = [];
-    //visitas.forEach(x=>objVisitas.push(Clases.Visita.fromJSON(x)))
-
-    let retorno = []
-    console.log(visitas.lenght)
-    for(let i=visitas.length-1 ; i>=0 ; i--){
-        retorno.push(Clases.Visita.fromJSON(visitas[i]))
-        //console.log(i)
-    }
-
-    //return objVisitas;
-    return retorno
+    let visitas = leerColeccionGenerica('visitas.txt');
+    // Mapear a instancias de Clases.Visita y retornar en orden inverso
+    return visitas.map(x => Clases.Visita.fromJSON(x)).reverse();
 }
 
-// --------------------------------
 
-function guardar(data){
-
-    let str_mercaderias = fs.readFileSync('./db.txt','utf-8')
-    let mercaderias = []
-    if(str_mercaderias){
-        mercaderias = JSON.parse(str_mercaderias)
-    }
-    
-    mercaderias.push(data)
-    fs.writeFileSync('./db.txt',JSON.stringify(mercaderias))
+// --- Donaciones ---
+function agregarDonacion(data){
+    let donaciones = leerColeccionGenerica('donaciones.txt');
+    donaciones.push(data); // `data` ya es una instancia de Clases.Donacion
+    escribirColeccionGenerica('donaciones.txt', donaciones);
 }
 
-function obtener(){
-
-    let str_mercaderias = fs.readFileSync('./db.txt','utf-8')
-    let mercaderias = []
-    if(str_mercaderias){
-        mercaderias = JSON.parse(str_mercaderias)
-    }
-
-    return mercaderias;
-
+function dameDonaciones(){
+    let donaciones = leerColeccionGenerica('donaciones.txt');
+    // CORRECCIÓN: Mapear a instancias de Clases.Donacion
+    return donaciones.map(x => Clases.Donacion.fromJSON(x));
 }
 
-// Eventos de Agenda ------------------------------------------------
 
-function nuevoEvento(data){
-// implementar.
+// --- Eventos de Agenda ---
+function nuevoEvento(data){ // 'data' debería ser una instancia de Clases.Evento
+    let eventos = leerColeccionGenerica('eventos.txt');
+    eventos.push(data);
+    escribirColeccionGenerica('eventos.txt', eventos);
 }
 
 function getEventos(){
-    // implementar.
-    const eve1 = new Clases.Evento("Visita del intendente de Lavalle",new Date(2025,0,1,12,30,0,0),45,"Invitaciones")
-    const eve2 = new Clases.Evento("Visita del intendente de Lavalle",new Date(2025,0,1,12,30,0,0),45,"Invitaciones")
-    const eve3 = new Clases.Evento("Visita del intendente de Lavalle",new Date(2025,0,1,12,30,0,0),45,"Invitaciones")
-    return [eve1, eve2, eve3]
+    let eventos = leerColeccionGenerica('eventos.txt');
+        console.log("Contenido raw de eventos.txt:", eventos); // <-- Agrega esta línea
+
+    // CORRECCIÓN: Mapear a instancias de Clases.Evento
+    return eventos.map(x => Clases.Evento.fromJSON(x));
 }
 
 function eliminarEvento(id){
-    // implementar
+    let eventos = leerColeccionGenerica('eventos.txt');
+    eventos = eventos.filter(evento => evento.id !== id);
+    escribirColeccionGenerica('eventos.txt', eventos);
 }
 
 
-module.exports = {eliminarEvento, getEventos, nuevoEvento, dameVisitas, leerNoticias ,guardar, obtener, guardarUsuario, getUsuarios, eliminarUsuario, validar, getNoticias, eliminarNoticia, guardarNoticia, agregarVisita, getVisitas, dameDonaciones, agregarDonacion}
+// --- Funciones de Mercaderia (si no se usan, pueden eliminarse) ---
+function guardar(data){ // Para db.txt y Mercaderia
+    let mercaderias = leerColeccionGenerica('db.txt');
+    mercaderias.push(data);
+    escribirColeccionGenerica('db.txt', mercaderias);
+}
+
+function obtener(){ // Para db.txt y Mercaderia
+    return leerColeccionGenerica('db.txt');
+}
+
+
+module.exports = {
+    validar,
+    guardarUsuario,
+    getUsuarios,
+    eliminarUsuario,
+
+    guardarNoticia,
+    getNoticias,
+    eliminarNoticia,
+
+    agregarVisita,
+    getVisitas,
+
+    agregarDonacion,
+    dameDonaciones, // Renombré de dameDonaciones para consistencia
+
+    nuevoEvento,
+    getEventos,
+    eliminarEvento,
+
+    guardar, // si no se usa, eliminar
+    obtener, // si no se usa, eliminar
+};

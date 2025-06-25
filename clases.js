@@ -24,51 +24,35 @@ class Evento{
     }
 }
 
-class Noticia{
-    constructor(titular, imagen, descripcion){
-        this.id = Helper.getUuid()
-        this.titular = titular;
-        this.imagen = imagen;
+class Noticia {
+    constructor(titulo, urlImagen, descripcion, id = this.generateUniqueId(), fechaCreacion = new Date()) { // Asegúrate de que generateUniqueId() exista o usa uuidv4()
+        this.id = id;
+        this.titulo = titulo;
+        this.urlImagen = urlImagen;
         this.descripcion = descripcion;
-        this.class = "Noticia";
+        this.fechaCreacion = fechaCreacion;
+        this.class = 'Noticia'; // Para identificación en JSON
     }
 
-    getTitular(){
-        return this.titular;
+    // Método para generar IDs únicos (si no usas uuidv4 directamente aquí)
+    generateUniqueId() {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 
-    getImagen(){
-        return this.imagen;
+    static fromJSON(json) {
+    console.log("1. fromJSON: JSON recibido:", json); // <--- AGREGAR ESTA LÍNEA
+
+        const titulo = json.titulo || json.titular;
+        const urlImagen = json.urlImagen || (json.imagen ? `/images/${json.imagen}` : null);
+        
+        const id = json.id;
+        const fechaCreacion = json.fechaCreacion ? new Date(json.fechaCreacion) : new Date();
+
+        const nuevaNoticia = new Noticia(titulo, urlImagen, json.descripcion, id, fechaCreacion);
+        console.log("2. fromJSON: Objeto Noticia creado:", nuevaNoticia); // <--- AGREGAR ESTA LÍNEA
+        
+        return nuevaNoticia;   
     }
-
-    getDescripcion(){
-        return this.descripcion;
-    }
-
-    setTitular(tit){
-        this.titular = tit;
-    }
-
-    setImagen(img){
-        this.imagen = img;
-    }
-
-    setDescripcion(des){
-        this.descripcion = des;
-    }
-
-    static fromJSON(json){
-        if(json.class == "Noticia"){
-            let nuevoNoticia = new Noticia();
-            nuevoNoticia.id = json.id;
-            nuevoNoticia.titular = json.titular;
-            nuevoNoticia.imagen = json.imagen;
-            nuevoNoticia.descripcion = json.descripcion;
-            nuevoNoticia.class = json.class
-
-            return nuevoNoticia;
-        }
-    }    
 }
 
 class Donacion {
@@ -260,4 +244,4 @@ class Perfil {
 }
 
 
-module.exports = {Evento, Portada, Mercaderia, Usuario, Perfil, Noticia, Visita, Donacion}
+module.exports = { Noticia, Usuario, Evento, Visita, Donacion, Portada }; // Asegúrate de exportar todas
