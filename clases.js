@@ -22,6 +22,12 @@ class Evento{
         this.cupo = cupo
         this.estado = esta
     }
+    // Método estático para crear una instancia de Evento desde un objeto JSON
+    static fromJSON(json) {
+        // Asegúrate de que los nombres de las propiedades en 'json' coincidan con cómo los usas en el constructor
+        // y con cómo están en tu archivo eventos.txt
+        return new Evento(json.descripcion, json.fecha, json.cupo, json.estado);
+    }
 }
 
 class Noticia {
