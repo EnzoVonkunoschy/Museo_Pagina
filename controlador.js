@@ -54,6 +54,11 @@ function listarNoticias(usuarioEnSesion, data) {
     }
 }
 
+function listarNoticias1(data) {
+    return Modelo.getNoticias()
+}
+
+
 function agregarNoticia(usuarioEnSesion, data){
     console.log(usuarioEnSesion)
     console.log(data)
@@ -126,4 +131,4 @@ function dameEventos(){
     console.log("controlador <-r- modelo '[{Eventos}]'")
     return Modelo.getEventos()
 }
-module.exports = {dameEventos, eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita, agregarDonacion, listarDonacion}
+module.exports = {listarNoticias1, dameEventos, eliminarEvento, nuevoEvento, listarVisitas, listarNoticias, agregarNoticia, eliminarUsuario, agregarUsuario, listarUsuarios,damePortada, eliminarNoticia, nuevo, obtener, agregarVisita, agregarDonacion, listarDonacion}

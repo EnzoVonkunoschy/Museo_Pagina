@@ -64,6 +64,9 @@ app.get('/', (req,res)=>{
     objeto.portada = Controlador.damePortada()
     objeto.eventos = Controlador.dameEventos();
 
+    let xcarga = Seguridad.listarNoticias1(req.body)
+    objeto.carga = xcarga
+
     var salida = template(objeto);
     res.send(salida);
 })

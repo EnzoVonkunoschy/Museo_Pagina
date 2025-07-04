@@ -21,6 +21,17 @@
     <p>{{portada.noticia.descripcion}}</p>
 
     <hr>
+
+    <h3>Noticias</h3>
+    
+    {{#each carga}}
+        <h2>{{this.titular}}</h2>
+        <img src="/images/{{this.imagen}}" alt="imagen" style="width: 500px;">
+        <p>{{this.descripcion}}</p>
+        <br>
+    {{/each}}
+    <hr>
+
     <p><b>Agenda</b></p>
     {{#each eventos}}
     <p>{{this.fecha}}  {{this.descripcion}} {{this.cupo}}  {{this.estado}}</p>
